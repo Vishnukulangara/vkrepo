@@ -8,3 +8,5 @@ while i<=n
 end  
 puts fact
 puts "#{fact}".length
+
+
