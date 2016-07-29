@@ -1,0 +1,17 @@
+%html
+  %head
+    %title loggedout
+  %body
+    %h2 
+      You are successfully logged out!
+      Please enter username and password to login.
+      %br/
+    %form{:action=>'/login', :method=>'post'}
+      username:
+      %input{:type=>'text', :name=>'user', :size=>'25'}
+      %br/
+      password:
+      %input{:type=>'password', :name=>'pw', :size=>'25'}
+      %br/
+      %br/
+      %input{:type=>'submit', :value=>'SEND'}

@@ -1,0 +1,14 @@
+%html
+	%head
+		%title new employer
+	%body
+		%h3 please login to go to your home page
+		%form{ :action => '/login/employer', :method => 'get' }
+			email:
+			%input{ :type => 'email', :name => 'email'} 
+			%br/
+			password:
+			%input{ :type => 'password', :name => 'password'}
+			%br/
+			%input{ :type =>'submit', :value => 'login'}
+			%br/

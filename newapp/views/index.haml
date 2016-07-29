@@ -1,0 +1,22 @@
+%html
+	%head 
+		%title index
+	:css
+		a:link    {color:green;  text-decoration:none}
+		
+		a:hover   {color:red; background-color:transparent; text-decoration:underline}
+		a:active  {color:yellow; background-color:transparent; text-decoration:underline}
+
+	%body 
+		%h3 Login as
+		-if flash[:notice]
+			- flash[:notice]
+		-if flash[:show]
+			- flash[:show] 
+	%a{:href => "/login_employer", :decoration =>"none"} Admin? &nbsp;
+	%a{:href => "/login_employee" ,:decoration =>"none"} Employee? 
+	%br/
+	%br/
+	%br/
+	%br/
+	%a{:href => "https://mail.google.com/mail/u/0/?logout&hl=en", :target => "_blank"} sign-out from google account 

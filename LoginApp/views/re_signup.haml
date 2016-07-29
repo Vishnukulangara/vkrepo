@@ -1,0 +1,35 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title signup
+    :css
+      body{ border: 1px solid black;margin:20px;}
+      h2{margin-left: 25px}
+  %body
+    %h2 Sign-Up error!
+    %pre
+      Passwords doesn't match! Please Re-enter the fields.
+      %br/
+    %form{:action => "/signedup", :method => "post"}
+      %p1
+        Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{:name => "name", :type => "text"}
+        %br/
+        username:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{:name => "username", :type => "text"}
+        %br/
+      %p2
+        password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{:name => "pword", :type => "password"}
+        %br/
+      %p3
+        confirm password:
+        %input{:name => "pword1", :type => "password"}
+        %br/
+      %p4
+        email ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{:name => "mail", :type => "email"}
+        %br/
+      %input{:type => "submit", :value => "Submit"}
+

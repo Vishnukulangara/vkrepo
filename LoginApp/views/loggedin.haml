@@ -1,0 +1,14 @@
+%html
+  %head
+    %title logged_in
+    :CSS
+      body{margin :25px}
+
+  %body
+    %h3 You are successfully logged in!
+    %form{:method=>'post', :action=>'/logout'}
+      %input{:type=>'submit', :value=>'logout'}
+    %form{:method=>'post', :action=>'/login/user'}
+      %input{:type=>'submit', :value=>'protected page!'}
+
+    

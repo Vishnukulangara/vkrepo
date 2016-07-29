@@ -1,0 +1,29 @@
+%html
+	%head 
+		%title login history
+		:CSS
+			th{border :2px;}
+			td{border :2px;}
+	%body
+		%h2 User's login history
+		%table
+			%tr
+				%th id
+				%th user_id
+				%th start
+				%th end
+				%th duration
+		= @login_histories.each do |t|
+			%tr
+				%td= t.id
+				%td= t.user_id
+				%td= t.login_time
+				%td= t.logout_time
+				%td= t.session_duration
+				%br/
+		
+				
+		= will_paginate @login_histories
+		%form{:method=>'get', :action=>'/logout'}
+			%input{:type=>'submit', :value=>'logout'}
+

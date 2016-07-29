@@ -1,0 +1,11 @@
+%html
+	%head 
+		%title login history
+	%body
+		%h2 User's login history
+		%pre= tp_pre @login_histories
+		
+		= will_paginate @login_histories
+
+		%form{:method=>'get', :action=>'/logout'}
+			%input{:type=>'submit', :value=>'logout'}

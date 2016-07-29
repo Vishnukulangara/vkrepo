@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    title The Flash Farm Shop
+    link rel="stylesheet" media="screen, projection" href="/styles.css"
+  body
+  	-require "sinatra/flash"
+    - if flash[:success]
+      .flash== flash[:success]
+    - if flash[:warning]
+      .flash== flash[:warning]
+	== yield

@@ -1,0 +1,21 @@
+<html> 
+  <head><title>Login</title>
+  <style>
+  body{border:2px solid black; margin:20px;  }
+  h2{margin-left: 20px;}
+  p1{margin:25px;}
+  </style></head>
+  <body>
+	<h2 >LOGIN ERROR!</h2>
+	<form method='post' action='/login'>
+	  <p1 >Incorrect username or password! Re-enter fields<br/><br/></p1>
+	  <p1 >username: <input type='text' name='user' size='25' /><br /></p1>
+	  <p1 >password: <input type='password' name='pw' size='25' /><br /><br /></p1>
+	  <p1 ><input type='submit' value='SEND' /><br/></p1>
+	</form>
+	<form action="/signup" method="get">
+	    <p1 ><input type='submit' value='SIGN UP' /></p1>
+    </form>
+	<p1 ><input type='submit' value='FORGOT PASSWORD?' /></p1>	
+  </body>
+</html>

@@ -1,0 +1,29 @@
+%html 
+  %head
+    %title Login
+    :CSS
+      body{border:2px solid black; margin:20px;}
+      h2{margin-left: 20px;}
+      p1{margin:25px;}
+  %body
+    %h2 LOGIN ERROR!
+    %form{:action=>'/login', :method=>'post'}
+      %p1
+        Incorrect email or password! Re-enter fields
+        %br/
+        %br/
+        email:
+        %input{:type=>'text', :name=>'email', :size=>'25'}
+        %br/
+        password:
+        %input{:type=>'password', :name=>'password', :size=>'25'}
+        %br/
+        %br/
+        %input{:type=>'submit', :value=>'SEND'}
+        %br/
+	
+    %form{:action=>"/signup", :method=>"post"}
+      %p1
+        %input{:type=>'submit', :value=>'SIGN UP'}
+    %form{:method=>'post', :action=>'/login/forgot_pw'}
+      %input{:type=>'submit', :value=>'FORGOT PASSWORD?'}

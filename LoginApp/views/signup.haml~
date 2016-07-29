@@ -1,0 +1,33 @@
+!!! 5
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title signup
+    %style
+      body{ border: 1px solid black;margin:20px;}
+      h2{margin-left:80px;}
+      p1{
+  %body
+    %h2 SIGN UP
+    %form{:action => "/signedup", :method => "get"}
+      %p1
+        Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{:name => "name", :type => "text"}
+        %br/
+        username:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{:name => "username", :type => "text"}
+        %br/
+      %p2
+        password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{:name => "pword", :type => "password"}
+        %br/
+      %p3
+        confirm password:
+        %input{:name => "pword1", :type => "password"}
+        %br/
+      %p4
+        email ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{:name => "mail", :type => "email"}
+        %br/
+      %input{:type => "submit", :value => "Submit"}
+

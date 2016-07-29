@@ -1,0 +1,27 @@
+%html 
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Login
+    :CSS
+      body{border:2px solid black; margin-left:20px;  }
+      h2{margin-left:50px;} 
+      p{margin-left:10px;}
+  %body
+    %h2 LOGIN
+    %form{:action=>'/login', :method=>'post'}
+      %p
+        username: 
+        %input{:type=>'text', :name=>'user', :size=>'25'}/
+        %br/
+        password: 
+        %input{:type=>'password', :name=>'pw', :size=>'25'}/
+        %br/
+        %br/
+        %input{:type=>'submit', :value=>'LOGIN'}/
+        %br/
+    %form{:action=>'/signup', :method=>'post'}
+      %p
+        If you haven't signed up already please sign up first. 
+        %input{:type=>'submit', :value=> 'SIGN UP'} 
+    %form{:method=>'post', :action=>'/login/forgot_pw'}
+      %input{:type=>'submit', :value=>'FORGOT PASSWORD?'}

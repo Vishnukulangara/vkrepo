@@ -1,0 +1,19 @@
+%html
+	%head
+		%title employer
+	%body
+
+		-if flash[:message]
+			- flash[:message]
+		%br/
+		%a{:href => "/employer/edit_info"}Edit info
+		%br/
+		%a{:href => "/employer/employee"}Employees
+		%br/
+		%a{:href => "/employer/users"}users
+		%br/
+		%a{:href => "/employer/assets"}asset management
+		%br/
+		
+		%a{ :href => "/logout"}Logout
+			
