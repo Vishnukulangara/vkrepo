@@ -1,0 +1,39 @@
+%html
+	%head 
+		%title profile
+	%body
+
+		- employee= Employee.find_by_id($id)
+		%h3= employee.name
+		%table
+			%tr
+				%th email
+				%td= employee.email
+				%br/
+			%tr
+				%th Date of Birth
+				%td= employee.date_of_birth
+				%br/
+			%tr
+				%th Address
+				%td= employee.address
+				%br/
+			%tr
+				%th Date of employment commenced
+				%td= employee.date_of_joining
+				%br/
+			%tr
+				%th employment status
+				%td= employee.employment_status
+				%br/
+			%tr
+				%th section
+				%td= employee.section
+				%br/
+
+		%form{ :action => "/employer/employee/#{$id}/edit", :method => "get"}
+			%input{ :type => "submit", :value => "edit info"}
+		
+		-p $id
+		%a{:href => "/employer/employee"}back
+

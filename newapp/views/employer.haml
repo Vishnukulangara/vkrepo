@@ -2,17 +2,34 @@
 	%head
 		%title employer
 	%body
+		-  c = Company.find_by_employer_id(current_employer.id) 
+		- if c.nil?
+			-e=Employer.find_by_id(current_employer.id)
+			%h2 e.company_name
+		-else
+			%h2= c.company_name 
 
 		-if flash[:message]
 			- flash[:message]
+
+		%h4= c.company_address
+		%h4= c.company_website		  
 		%br/
-		%a{:href => "/employer/edit_info"}Edit info
+
+		%br/
+		%a{:href => "/employer/edit_info"}Update company info
 		%br/
 		%a{:href => "/employer/employee"}Employees
 		%br/
 		%a{:href => "/employer/users"}users
 		%br/
 		%a{:href => "/employer/assets"}asset management
+		%br/
+		%form
+			Search for employees:
+			%input{ :type => "search", :name => "search_employee"}
+		%br/
+		
 		%br/
 		
 		%a{ :href => "/logout"}Logout

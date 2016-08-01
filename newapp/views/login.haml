@@ -14,16 +14,14 @@
 			- flash[:message]
 
 
-		%form{ :action => '/login/employer', :method => 'get' }
-			email:
+		%form{ :action => '/employer', :method => 'get' }
+			email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			%input{ :type => 'email', :name => 'email'} 
 			%br/
 			password:
 			%input{ :type => 'password', :name => 'password'}
 			%br/
-			company name:
-			%input{ :type => 'text', :name => 'company_name'}
-			%br/
+			
 			%input{ :type =>'submit', :value => 'login'}
 			%br/
 

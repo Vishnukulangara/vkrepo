@@ -17,10 +17,10 @@
       - flash[:warning]
     -if flash[:msg]
       - flash[:msg]
-    %form{:action => "/login/new_employer", :method => "get"}
+    %form{:action => "/new_employer", :method => "get"}
       %p1
         Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        %input{:name => "name", :type => "text"}
+        %input{ :type => "text", :name => "name"}
         %br/
         email ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         %input{:name => "email", :type => "email"}
@@ -41,3 +41,5 @@
         %br/
         %br/
       %input{:type => "submit", :value => "Submit"}
+      %br/
+      %a{:href => "/"}home
