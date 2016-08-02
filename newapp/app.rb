@@ -43,6 +43,27 @@ class WebApp < Sinatra::Application
   G_API_CLIENT= ENV['G_API_CLIENT']
   G_API_SECRET= ENV['G_API_SECRET']
 
+  def g_auth
+    @email=session[:current_employee_email]
+    #@access_token = session[:access_token]
+    
+    if @email==""
+      
+      access_token = client.auth_code.get_token(params[:code], :redirect_uri => redirect_uri)
+      session[:access_token] = access_token.token
+      @access_token = session[:access_token]
+      mail = access_token.get('https://www.googleapis.com/userinfo/email?alt=json').parsed
+      @email=mail.flatten[1].flatten[1]
+      session[:current_employee_email]=@email
+    end
+  end
+
+  def current_employee
+    @email=session[:current_employee_email]
+    current_employee=Employee.find_by_email(@email)
+  end
+
+
   def client
     client ||= OAuth2::Client.new(G_API_CLIENT, G_API_SECRET, {
                 :site => 'https://accounts.google.com', 
@@ -70,16 +91,16 @@ class WebApp < Sinatra::Application
     def authenticate!
       employer = Employer.find_by_email(params["email"])
       if employer.nil?
-        puts "-------------------------------------"
+        
         fail!("Could not log in")
       else
-        puts "***************************"
+        
         puts employer
         if employer && employer.authenticate(params["password"])
           success!(employer)
-          puts "================================"
+          
           puts employer
-          p "++++++++++++++++++++++++++++++++++++++++++++++++++====================================="
+          
           #p env['warden'].session_serializer
           #p env['warden'].session[:employer]
           
@@ -114,6 +135,7 @@ class WebApp < Sinatra::Application
 end
 
 require_relative 'models/employers.rb'
+require_relative 'models/assets.rb'
 require_relative 'models/employees.rb'
 require_relative 'models/companies.rb'
 require_relative 'controllers/employer_controller.rb'

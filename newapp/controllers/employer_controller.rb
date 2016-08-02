@@ -12,15 +12,20 @@ get '/signup' do
 	flash[:msg] = "Please enter the fields with correct information"
 	haml :signup
 end
+
+
 get '/employer' do
 	env['warden'].authenticate!
 	employer= current_employer
     #p employer
     if env['warden'].authenticated?
 		flash.now[:message] = "welcome back !"
+
 		haml :employer
 	end
 end
+
+
 get '/new_employer' do
 		
 	employer = Employer.create({name:  params[:name], email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation], company_name: params[:company_name]})
@@ -38,8 +43,10 @@ get '/new_employer' do
 end
 
  get '/unauthenticated' do
-	flash[:error] = "Incorrect email or password! "
-	redirect '/login_employer'
+	flash[:failure] = "Incorrect email or password! "
+	#flash[:failure]= "Please sign out of the current google account to login "
+	session[:current_employee_email]=""
+	redirect '/'
 end 
 
 get '/logout' do
@@ -53,21 +60,18 @@ get "/login_employee" do
 end
 
 get '/oauth2callback' do
-  access_token = client.auth_code.get_token(params[:code], :redirect_uri => redirect_uri)
-  session[:access_token] = access_token.token
-  @access_token = session[:access_token]
+	g_auth
   
-  # parsed is a handy method on an OAuth2::Response object that will 
+  #haml :employee
   
-  mail = access_token.get('https://www.googleapis.com/userinfo/email?alt=json').parsed
-  @email=mail.flatten[1].flatten[1]
-  # employer=Employer.find_by_email(@email)
-  # if employer.nil?
-  # 	redirect '/unauthenticated'
-  
-  # else
-  haml :employee
-  #end
+  employee=Employee.find_by_email(@email)
+  if employee.nil?
+
+   	redirect '/unauthenticated'
+  else
+  	id= employee.id
+  	redirect "/employee/#{id}"
+  end
 end
 
 post '/unauthenticated' do
@@ -75,10 +79,13 @@ post '/unauthenticated' do
     flash[:failure] = "error logging in"
     redirect '/login_employer'
 end
+
+
 get '/employer/edit_info' do
 	check_authentication 
 	haml :edit_info
 end
+
 
 get "/employer/edit_info/" do
 	check_authentication
@@ -112,10 +119,18 @@ get "/employer/users" do
 	check_authentication
 	haml :employer_user
 end
+
+
 get "/employer/assets" do
 	check_authentication 
 	haml :employer_assets
 end
+
+get "/employer/assets/update" do
+	check_authentication
+	haml :manage_assets
+end
+
 get "/employer/employee/new" do
 	check_authentication
 	employee = Employee.create({name: params[:name], employer_id: current_employer.id, date_of_birth: params[:dob], email: params[:email], address: params[:address], date_of_joining: params[:joining_date], employment_status: params[:status], section: params[:section] })
@@ -127,17 +142,31 @@ get "/employer/employee/new" do
 		redirect "/employer/employee"
 	end
 end
+
+
 get "/employer/employee/:id" do 
 	check_authentication
 	$id= params[:id]
-	$id
-	haml :profile
+	if Employee.find_by_id($id).nil?
+		flash[:err5]= "Incorrect employee ID?"
+		redirect "/employer/employee"
+	else
+		if Employee.find_by_id($id).employer_id== current_employer.id
+			haml :profile
+		else
+			flash[:err5]= "Incorrect employee ID?"
+			redirect "/employer/employee"
+		end		
+	end
 end
+
+
 get "/employer/employee/:id/edit" do 
 	check_authentication
 	$id= params[:id]
 	haml :edit_profile
 end
+
 
 get "/employer/employee/:id/edit_employee" do
 	check_authentication
@@ -181,4 +210,38 @@ get "/employer/employee/:id/edit_employee" do
 		flash[:err3] = "employee information not updated. Please redo"
 		redirect "/employer/employee"
 	end
+end
+
+
+get '/employee/:id' do
+	g_auth
+	@id= params[:id]
+	employee= Employee.find_by_id(@id)
+	if employee.nil?
+		flash[:err4]= "Sorry you are not allowed to visit this page"
+		redirect '/login_employee'
+	else
+		if employee == current_employee
+			#employer=Employer.find_by_id(employee.employer_id)
+			company = Company.find_by_id(employee.employer_id)
+			@company= company.company_name
+			p @company
+			flash[:msg4] = "welcome #{current_employee.name}"
+			haml :employee
+		else
+			flash[:err4]= "Sorry , you are not allowed to visit the requested page. If you want to view #{employee.name}'s profile please search instead"
+			redirect '/login_employee'
+		end
+	end
+end
+
+get '/employer/search_employee' do 
+	check_authentication
+	@input = params[:search_employee]
+	haml :search_employee
+end
+
+get '/employee/logout/' do	
+	session[:current_employee_email]=""
+	redirect '/'
 end

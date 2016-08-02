@@ -1,1 +1,23 @@
-hello 
+%html
+	%head
+		%title employee
+	%body
+		/ - flash.keys.each do |type|
+		/ 	%div{:class => "flash #{type} alert-box radius", "data-alert" => ""}
+		/ 		= flash[type]
+		/ 		%a.close{:href => "#"} 
+		
+		-if flash[:err4]
+			= flash[:err4]
+		-if flash[:msg4]
+			= flash[:msg4]
+		
+		
+		%h2=Company.find_by_id(current_employee.employer_id).company_name
+		%table
+			%tbody
+				%tr
+					%th email ID
+					%td= current_employee.email
+
+		%a{ :href => "/employee/logout/"}Log out

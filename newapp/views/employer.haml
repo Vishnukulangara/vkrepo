@@ -5,15 +5,17 @@
 		-  c = Company.find_by_employer_id(current_employer.id) 
 		- if c.nil?
 			-e=Employer.find_by_id(current_employer.id)
-			%h2 e.company_name
+			%h2= e.company_name
 		-else
 			%h2= c.company_name 
+			%h4= c.company_address
+			%h4= c.company_website	
 
-		-if flash[:message]
-			- flash[:message]
+		-if flash[:message] 
+			= flash[:message]
 
-		%h4= c.company_address
-		%h4= c.company_website		  
+
+			  
 		%br/
 
 		%br/
@@ -25,9 +27,10 @@
 		%br/
 		%a{:href => "/employer/assets"}asset management
 		%br/
-		%form
+		%form{:action=> "/employer/search_employee", :method => "get"}
 			Search for employees:
 			%input{ :type => "search", :name => "search_employee"}
+			( you can search by name, employer ID, email ID)
 		%br/
 		
 		%br/

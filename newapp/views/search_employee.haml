@@ -1,0 +1,11 @@
+%html
+	%head
+		%title edit employee_search
+	%body
+	-tag = @input
+	-Employee.where(name: "#{tag}").find_each do |e|
+		%a{:href =>"/employer/employee/#{e.id}"}= e.name
+	-Employee.where(email: "#{tag}").find_each do |e|
+		%a{:href =>"/employer/employee/#{e.id}"}= e.name
+	-Employee.where(id: "#{tag}").find_each do |e|
+		%a{:href =>"/employer/employee/#{e.id}"}= e.name 

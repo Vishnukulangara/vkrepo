@@ -1,6 +1,7 @@
 class Employer < ActiveRecord::Base
 	has_one :company
 	has_many :employees
+	has_many :assets
 	include BCrypt
 	has_secure_password
 

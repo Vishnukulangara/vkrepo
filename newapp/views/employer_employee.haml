@@ -3,20 +3,22 @@
   %body
     %h2 EMPLOYEES
     %p
-    - flash.keys.each do |type|
-      %div{:class => "flash #{type} alert-box radius", "data-alert" => ""}
-        = flash[type]
-        %a.close{:href => "#"} 
+    / - flash.keys.each do |type|
+    /   %div{:class => "flash #{type} alert-box radius", "data-alert" => ""}
+    /     = flash[type]
+    /     %a.close{:href => "#"} 
     
     -if flash[:msg2]
-      - flash[:msg2]
+      = flash[:msg2]
     -if flash[:err2]
-      - flash[:err2]
+      = flash[:err2]
     -if flash[:msg3]
-      - flash[:msg3]
+      = flash[:msg3]
     -if flash[:err3]
-      - flash[:err3]
-     
+      = flash[:err3]
+    -if flash[:err5]
+      = flash[:err5]
+    %br/
     
     %button{:onclick => "myFunction2()", :type => "button"} employees list
     %br/
@@ -30,29 +32,20 @@
         function myFunction() { document.getElementById("mydiv").style.display = "block"; }
     %div#create
       :css
-        #create {display:none}
-      %html
-      %head 
-      %title employeeslist
-      %body 
-        %h3 Employees list
-        %table 
-          %tr
-            %th  Name
-            %th  email id
-            
-        -  Employee.find_each do |t|
-          %tr
-            %td
-              - #$id=t.id
-              -t.id
-
+        #create {display:none;}
+        table, th, td {border: 1px solid black;}
+        table {border-collapse: collapse;}
+        a {text-decoration: none;} 
+      %table
+        %tr
+          %th  Name
+          %th  email id
+        %tr
+          -Employee.where(employer_id: current_employer.id).find_each do |t|
+            %td 
               %a{ :href =>"/employer/employee/#{t.id}"}= t.name 
-            %td= t.email 
-            %br/
-            -# $id
-        %br/
-        %br/
+            %td= t.email
+            %tr
 
     %div#mydiv
       :css 

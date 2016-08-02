@@ -3,15 +3,15 @@
 		%title login
 	%body
 		%h2 ADMIN
-		- flash.keys.each do |type|
-			%div{:class => "flash #{type} alert-box radius", "data-alert" => ""}
-				= flash[type]
-				%a.close{:href => "#"} 
+		/ - flash.keys.each do |type|
+		/ 	%div{:class => "flash #{type} alert-box radius", "data-alert" => ""}
+		/ 		= flash[type]
+		/ 		%a.close{:href => "#"} 
 		
-		-if flash[:error]
-			- flash[:error]
+		-if flash[:failure]
+			= flash[:failure]
 		-if flash[:message]
-			- flash[:message]
+			= flash[:message]
 
 
 		%form{ :action => '/employer', :method => 'get' }
