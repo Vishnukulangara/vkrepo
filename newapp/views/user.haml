@@ -1,0 +1,36 @@
+%html
+	%head
+		%title user
+	%body
+		%h2= Employer.find(@id).name
+
+		%p 
+			User ID: 
+			= Employer.find(@id).id
+		
+		%button{:onclick => "myFunction()", :type => "button"}Edit user 
+		:javascript
+			function myFunction() { document.getElementById("mydiv").style.display = "block"; }
+		%div#mydiv
+			:css
+				#mydiv {display:none;}
+			%form{:action => "/employer/user/edit/#{@id}", :method => "get"}
+			
+				Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				%input{ :type => "text", :name => "name"}
+				%br/
+				email ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				%input{:name => "email", :type => "email"}
+				%br/
+				
+				
+				
+				%input{:type => "submit", :value => "Submit"}
+		
+				%br/
+		%br/
+		%a{ :href => "/employer/user/delete/#{@id}"}Delete user
+		%br/
+		%a{:href => "/employer/users" }back
+
+

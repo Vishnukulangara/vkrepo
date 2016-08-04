@@ -11,14 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160802142325) do
+ActiveRecord::Schema.define(version: 20160804102118) do
+
+  create_table "asset_categories", force: :cascade do |t|
+    t.integer "category_id",    limit: 4
+    t.integer "type_id",        limit: 4
+    t.integer "a_c_id",         limit: 4
+    t.string  "asset_category", limit: 255
+    t.string  "asset_type",     limit: 255
+  end
 
   create_table "assets", force: :cascade do |t|
     t.integer "employer_id",       limit: 4
     t.integer "employee_id",       limit: 4
     t.string  "asset_name",        limit: 255
-    t.integer "asset_number",      limit: 4
     t.string  "working_condition", limit: 255
+    t.string  "asset_id",          limit: 255
+    t.string  "specification",     limit: 255
+    t.string  "asset_category",    limit: 255
+    t.string  "asset_type",        limit: 255
   end
 
   create_table "companies", force: :cascade do |t|
@@ -43,16 +54,19 @@ ActiveRecord::Schema.define(version: 20160802142325) do
     t.string  "pancard_no",            limit: 255
     t.string  "passport_details",      limit: 255
     t.string  "qualification_details", limit: 255
+    t.integer "employee_id",           limit: 4
   end
 
   create_table "employers", force: :cascade do |t|
-    t.string "name",            limit: 255
-    t.string "company_name",    limit: 255
-    t.string "company_address", limit: 255
-    t.string "company_website", limit: 255
-    t.string "image_path",      limit: 255
-    t.string "email",           limit: 255
-    t.string "password_digest", limit: 255
+    t.string  "name",             limit: 255
+    t.string  "company_name",     limit: 255
+    t.string  "company_address",  limit: 255
+    t.string  "company_website",  limit: 255
+    t.string  "image_path",       limit: 255
+    t.string  "email",            limit: 255
+    t.string  "password_digest",  limit: 255
+    t.integer "role",             limit: 4
+    t.integer "user_employer_id", limit: 4
   end
 
   create_table "login_histories", force: :cascade do |t|

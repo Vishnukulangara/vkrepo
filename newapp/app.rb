@@ -47,7 +47,8 @@ class WebApp < Sinatra::Application
     @email=session[:current_employee_email]
     #@access_token = session[:access_token]
     
-    if @email==""
+    if @email=="" || @email.nil?
+      p "-----------------------------------------------------"
       
       access_token = client.auth_code.get_token(params[:code], :redirect_uri => redirect_uri)
       session[:access_token] = access_token.token
@@ -136,6 +137,8 @@ end
 
 require_relative 'models/employers.rb'
 require_relative 'models/assets.rb'
+require_relative 'models/asset_categories.rb'
 require_relative 'models/employees.rb'
 require_relative 'models/companies.rb'
 require_relative 'controllers/employer_controller.rb'
+require_relative 'controllers/employee_controller.rb'

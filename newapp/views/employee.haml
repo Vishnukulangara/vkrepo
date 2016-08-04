@@ -14,10 +14,93 @@
 		
 		
 		%h2=Company.find_by_id(current_employee.employer_id).company_name
-		%table
-			%tbody
-				%tr
-					%th email ID
-					%td= current_employee.email
+		%h4= current_employee.name
+		%br/
+		%button{:onclick => "myFunction()", :type => "button"} Employee Profile
+    
+		:javascript
+			function myFunction() { 
+				document.getElementById("create").style.display = "block";}
 
-		%a{ :href => "/employee/logout/"}Log out
+		%div#create
+			:css
+				#create {display:none;}
+				table, th, td {border: 1px solid black; text-align : left;}
+				table {border-collapse: collapse;}
+				a {text-decoration: none;} 
+			%table
+				%tr
+					%th  Name
+					%td= current_employee.name 
+				%tr				
+					%th employee ID						
+					%td= current_employee.employee_id
+				%tr				
+					%th email ID						
+					%td= current_employee.email
+				%tr				
+					%th Date of Birth				
+					%td= current_employee.date_of_birth
+				%tr				
+					%th Address					
+					%td= current_employee.address
+				%tr				
+					%th Date of Employment Commenced				
+					%td= current_employee.date_of_joining
+				%tr				
+					%th Employment Status					
+					%td= current_employee.employment_status
+				%tr				
+					%th Employment Section					
+					%td= current_employee.section
+				%tr				
+					%th Bank Account Details						
+					%td= current_employee.bank_account_details
+				%tr				
+					%th Pancard Number				
+					%td= current_employee.pancard_no
+				%tr				
+					%th Aadhar Card Number						
+					%td= current_employee.adhar_no
+				%tr				
+					%th Passport Details						
+					%td= current_employee.passport_details
+				%tr				
+					%th Qualification Details						
+					%td= current_employee.qualification_details
+			%a{ :href => "/employee/#{current_employee.employee_id}/update_info"}Update Profile
+					
+		%br/
+		%button{:onclick => "myFunction2()", :type => "button"} Employee's Assets
+    
+		:javascript
+			function myFunction2() { 
+				document.getElementById("assets").style.display = "block";}
+		%div#assets
+			:css
+				#assets {display:none;}
+				table, th, td {border: 1px solid black; text-align : left;}
+				table {border-collapse: collapse;}
+				a {text-decoration: none;} 
+			%table
+				%tr
+					%th  Asset name
+					%th  Asset id
+				%tr
+				-Asset.where(employee_id: current_employee.employee_id).find_each do |t|
+					%td= t.asset_name  
+
+					%td
+						%a{ :href =>"/employee/asset/#{t.asset_id}"}= t.asset_id
+
+					%tr
+	%br/
+	%form{:action=> "/employee/search_employee", :method => "get"}
+		Search for employees:
+		%input{ :type => "search", :name => "search_employee"}
+		( you can search by name, employer ID, email ID and section of the employee)
+		%br/
+	%br/
+
+	%a{ :href => "/employee/logout"}Logout				
+			

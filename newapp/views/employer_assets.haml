@@ -1,27 +1,68 @@
 %html
+	%head
+		:css
+			table, th, td {border : 1px solid black; text-align : left}
+				table{border-collapse : collapse
+				}
 	%body
-		%h2= Company.find(current_employer.id).company_name
+		-  c = Company.find_by_employer_id(current_employer.id) 
+		- if c.nil? && current_employer.role==1
+			-e=Employer.find_by_id(current_employer.id)
+			%h2= e.company_name
+			
+		-elsif c.nil? && current_employer.role==2
+			-c = Company.find_by_employer_id(current_employer.user_employer_id)
+			
+			%h2= c.company_name  
+
+		-else
+			%h2= c.company_name 
+
 		%h3 Asset Details
 		
 		%table
 			%tr
-				%th Asset
-				%th Number
+				%th Asset ID
+				%th Asset Name
+				%th Category
+				%th Type
 				%th Assigned to:
 				%th Working condition
+				%th Specification
 			%tr
-				-Asset.where(employer_id: current_employer.id).find_each do |t|
-					%td= t.asset_name
-					%td= t.asset_number
-					%td 
-						-if t.employee_id==0
-							un-assigned
-						-else
-							- e = Employee.where(id: t.employee_id)
-							=e.name
-					%td= t.working_condition
-					%tr
+				-if current_employer.role ==1
+					-Asset.where(employer_id: current_employer.id).find_each do |t|
+						%td
+							%a{:href =>"/employer/asset/#{t.asset_id}"}= t.asset_id
+						%td= t.asset_name
+						%td= t.asset_category
+						%td= t.asset_type
+						%td 
+							-if t.employee_id==0
+								un-assigned
+							-else
+								= Employee.find_by_employee_id( t.employee_id).name
+								
+						%td= t.working_condition
+						%td= t.specification
+						%tr
+				-else
+					-Asset.where(employer_id: current_employer.user_employer_id).find_each do |t|
+						%td
+							%a{:href =>"/employer/asset/#{t.asset_id}"}= t.asset_id
+						%td= t.asset_name
+						%td= t.asset_category
+						%td= t.asset_type
+						%td 
+							-if t.employee_id==0
+								un-assigned
+							-else
+								= Employee.find_by_employee_id( t.employee_id).name
+								
+						%td= t.working_condition
+						%td= t.specification
+						%tr
 
-		%a{:href => "/employer/assets/update"}Manage Assets
+		%a{:href => "/employer/assets/manage"}Manage Assets
 		%br/
 		%a{:href => "/employer"}back

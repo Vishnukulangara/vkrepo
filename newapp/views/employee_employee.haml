@@ -1,0 +1,87 @@
+%html
+	%head
+		%title employee
+	%body
+		
+		
+		
+		%h2=Company.find_by_id(current_employee.employer_id).company_name
+		
+		- employee = Employee.find_by_employee_id(@id)
+
+		%div
+			:css
+				#create {display:none;}
+				table, th, td {border: 1px solid black; text-align : left;}
+				table {border-collapse: collapse;}
+				a {text-decoration: none;} 
+			%table
+				%tr
+					%th  Name
+					%td= employee.name 
+				%tr				
+					%th employee ID						
+					%td= employee.employee_id
+				%tr				
+					%th email ID						
+					%td= employee.email
+				%tr				
+					%th Date of Birth				
+					%td= employee.date_of_birth
+				%tr				
+					%th Address					
+					%td= employee.address
+
+				%tr				
+					%th Employment Status					
+					%td= employee.employment_status
+
+				%tr				
+					%th Date of Employment Commenced				
+					%td= employee.date_of_joining
+				%tr				
+					%th Employment Section					
+					%td= employee.section
+		%br/
+		%br/
+		-if employee == current_employee
+			%button{:onclick => "myFunction()", :type => "button"}Full Profile
+	    
+			:javascript
+				function myFunction() { 
+					document.getElementById("create").style.display = "block";}
+
+		%div#create
+			:css
+				#create {display:none;}
+				table, th, td {border: 1px solid black; text-align : left;}
+				table {border-collapse: collapse;}
+				a {text-decoration: none;} 
+			%table		
+				%tr				
+					%th Bank Account Details						
+					%td= current_employee.bank_account_details
+				%tr				
+					%th Pancard Number				
+					%td= current_employee.pancard_no
+				%tr				
+					%th Aadhar Card Number						
+					%td= current_employee.adhar_no
+				%tr				
+					%th Passport Details						
+					%td= current_employee.passport_details
+				%tr				
+					%th Qualification Details						
+					%td= current_employee.qualification_details
+			%a{ :href => "/employee/#{current_employee.employee_id}/update_info"}Update Profile
+					
+		%br/
+
+		%br/
+		
+		
+	%br/
+	
+	%br/
+
+	%a{ :href => "/employees/#{current_employee.employee_id}"}Back				

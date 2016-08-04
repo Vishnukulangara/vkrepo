@@ -3,13 +3,23 @@
 		%title employer
 	%body
 		-  c = Company.find_by_employer_id(current_employer.id) 
-		- if c.nil?
+		- if c.nil? && current_employer.role==1
 			-e=Employer.find_by_id(current_employer.id)
 			%h2= e.company_name
+			
+		-elsif c.nil? && current_employer.role==2
+			-c = Company.find_by_employer_id(current_employer.user_employer_id)
+			
+			%h2= c.company_name  
+			%h4= c.company_address
+			%h4= c.company_website
+			
 		-else
 			%h2= c.company_name 
 			%h4= c.company_address
-			%h4= c.company_website	
+			%h4= c.company_website
+			
+				
 
 		-if flash[:message] 
 			= flash[:message]
@@ -21,19 +31,81 @@
 		%br/
 		%a{:href => "/employer/edit_info"}Update company info
 		%br/
-		%a{:href => "/employer/employee"}Employees
-		%br/
-		%a{:href => "/employer/users"}users
-		%br/
+		
 		%a{:href => "/employer/assets"}asset management
 		%br/
+		-if current_employer.role == 1
+			%a{:href => "/employer/employee"}Employees
+			%br/
+			%a{:href => "/employer/users"}users
+			%br/
 		%form{:action=> "/employer/search_employee", :method => "get"}
 			Search for employees:
 			%input{ :type => "search", :name => "search_employee"}
-			( you can search by name, employer ID, email ID)
-		%br/
+			( you can search by name, employer ID, email ID and section of the employee)
+			%br/
 		
-		%br/
 		
+		-if current_employer.role==2	
+			%button{:onclick => "myFunction2()", :type => "button"} employees list
+			%br/
+
+
+
+		:javascript
+			function myFunction2() { 
+			document.getElementById("create").style.display = "block";}
+
+		%div#create
+			:css
+				#create {display:none;}
+				table, th, td {border: 1px solid black;}
+				table {border-collapse: collapse;}
+				a {text-decoration: none;} 
+			%table
+				%tr
+					%th  Name
+					%th  email id
+				%tr
+					-Employee.where(employer_id: current_employer.user_employer_id).find_each do |t|
+						%td 
+							%a{ :href =>"/employer/employee/#{t.employee_id}"}= t.name 
+						%td= t.email
+						%tr
+
+		%button{:onclick => "myFunction()", :type => "button"}
+			-if current_employer.role == 1
+				Edit Admin Details
+			-else
+				Change Password
+		:javascript
+			function myFunction() { document.getElementById("mydiv").style.display = "block"; }
+		%div#mydiv
+			:css
+				#mydiv {display:none;}
+			%form{:action => "/employer/edit/#{current_employer.id}", :method => "get"}
+				-if current_employer.role==1
+					Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					%input{ :type => "text", :name => "name"}
+					%br/
+					email ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					%input{:name => "email", :type => "email"}
+					%br/
+				
+								
+				New Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				%input{:name => "password", :type => "password"}
+				%br/
+				
+				Confirm Password:
+				%input{:name => "password_confirmation", :type => "password"}
+				%br/
+				
+				
+				%input{:type => "submit", :value => "Submit"}
+		
+				%br/
+		%br/
+
 		%a{ :href => "/logout"}Logout
 			

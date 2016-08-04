@@ -1,0 +1,63 @@
+%html
+	%head 
+		%title asset
+		
+	%body
+		:css
+			table, th, td{ border: 1px solid black; text-align: left; }
+			table, tr, td, th{border-collapse: collapse;}
+			caption {font-size : 20px; font-weight: bold ; font-style : italic;}
+
+		- asset= Asset.find_by_asset_id(@id)
+		
+		%table
+			%caption= asset.asset_name
+			%tbody
+				%tr
+					%th asset ID
+					%td= asset.asset_id
+					%br/
+				%tr
+					%th Category
+					%td= asset.asset_category
+					%br/
+				%tr
+					%th Type
+					%td= asset.asset_type
+					%br/
+				%tr
+					%th Assigned to:
+					%td
+						-if asset.employee_id==0
+							un-assigned
+						-else
+							= Employee.find_by_employee_id(asset.employee_id).name
+					%br/
+				%tr
+					%th Working Condition
+					%td= asset.working_condition
+					%br/
+				%tr
+					%th Specification
+					%td= asset.specification
+					%br/
+	
+
+	
+		
+		
+	-emp= current_employer
+	
+	-if emp.nil?
+		-if @code == current_employee.employee_id 
+			%a{:href => "/employees/#{current_employee.employee_id}"}back
+	-else
+		
+		-if  @code == emp.id 
+			%br/
+			%form{ :action => "/employer/assets/#{@id}/edit", :method => "get"}
+				%input{ :type=> "submit", :value => " Edit Asset Info"}
+
+			%a{:href => "/employer/assets/manage"}back
+
+

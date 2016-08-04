@@ -1,0 +1,25 @@
+%html
+	%head
+		%title users
+		:css
+			table, th, td{ border : 1px solid black;}
+			table{border-collapse : collapse;}
+	%body
+		%h2=Company.find_by_employer_id(current_employer.id).company_name
+		%table
+			%tr
+				%th User
+				%th User ID
+			
+			%tr
+				-Employer.where(user_employer_id: current_employer.id).find_each do |u|
+					%td
+						%a{ :href => "/employer/users/#{u.id}"}=u.name 
+					%td=u.id 
+					%tr
+
+		%a{ :href => "/employer/user/create"} Create User
+		%br/
+		
+		%br/
+		%a{ :href => "/employer"}Back

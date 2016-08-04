@@ -43,7 +43,7 @@
         %tr
           -Employee.where(employer_id: current_employer.id).find_each do |t|
             %td 
-              %a{ :href =>"/employer/employee/#{t.id}"}= t.name 
+              %a{ :href =>"/employer/employee/#{t.employee_id}"}= t.name 
             %td= t.email
             %tr
 

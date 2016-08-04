@@ -1,0 +1,40 @@
+!!! 5
+%html
+  %head
+    
+    
+    %style
+      body{ border: 1px solid black;margin:20px;}
+      h2{margin-left:80px;}
+      p1{
+  %body
+    %h2 Create Assets
+    -if flash[:success]
+      =flash[:success]
+    -elsif flash[:error]
+      =flash[:error]
+
+    %form{:action => "/employer/assets/create/", :method => "get"}
+      %p1
+        Asset name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{ :type => "text", :name => "asset_name"}
+        %br/
+        category:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{:name => "category", :type => "string"}
+        %br/
+        Type:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{:name => "type", :type => "string"}
+        %br/
+        
+        
+      %p2
+        working condition:
+        %input{:name => "working_condition", :type => "text"}
+        %br/
+        Specification:
+        %input{:name => "specification", :type => "text"}
+        %br/
+      
+      %input{:type => "submit", :value => "Create"}
+      %br/
+      %a{:href => "/employer/assets/manage"}Back
