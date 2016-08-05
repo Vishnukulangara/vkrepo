@@ -103,7 +103,7 @@ get "/employer/edit_info/" do
 	else
 		company.employer_id=current_employer.id
 		company.save
-		if params[:company_name] != "" || params[:company_name]== NULL
+		if params[:company_name] != "" 
 			company.company_name = params[:company_name]
 			company.save
 		end
@@ -149,20 +149,24 @@ get'/employer/user/delete/:id' do
 end
 
 get '/employer/user/edit/:id' do
+	check_authentication
 	@id = params[:id]
-	employer = Employer.find_by_id(@id)
-	p "11111#{employer.name}22222222222"
+	employer = Employer.find(@id)
+
+	
 	p params[:name]
-	if params[:name]!=""
-		p "11111#{employer}22222222222"
+	if params[:name] != ""
+		p "11111#{employer.password}22222222222"
 		employer.name = params[:name]
 		employer.save
-		p "11111#{employer}22222222222"
+		p "11111#{employer.name}22222222222"
 	end
 	if params[:email]!=""
 		employer.email = params[:email]
 		employer.save
 	end
+	employer.save
+	p "#{employer.name}"
 	redirect "/employer/users"
 end
 get "/employer/user/create/" do 
@@ -394,7 +398,22 @@ get "/employer/employee/new" do
 		employee.save
 		if employee.errors.empty?
 			flash[:msg2] = "new employee added"
+			#WEgKNKHKZIGaAAqpAB2y2A
+
+			#e97e2795-4112-4927-920f-2b84e6df1dec
+			settings.mailer.deliver(from: current_employer.email,
+               to: params[:email],
+               subject: "Job Confirmation",
+               text_body: "Hi #{params[:name]} , 
+               Welcome to #{current_employer.company_name}. Your joining_date is #{params[:joining_date]}.
+               Thanks & Regards, 
+               #{current_employer.name}	
+               #{current_employer.company_name}")
+               						  	
+               							 	
+			
 			redirect "/employer/employee"
+
 		else
 			flash[:err2] = "employee creation failed. Please redo"
 			redirect "/employer/employee"
@@ -414,15 +433,39 @@ get "/employer/employee/:id" do
 		flash[:err5]= "Incorrect employee ID?"
 		redirect "/employer/employee"
 	else
-		if Employee.find_by_employee_id($id).employer_id== current_employer.id
-			haml :profile
-		else
-			flash[:err5]= "Incorrect employee ID?"
-			redirect "/employer/employee"
-		end		
+		if current_employer.role ==1
+			if Employee.find_by_employee_id($id).employer_id== current_employer.id
+				haml :profile
+
+			else
+				flash[:err5]= "Incorrect employee ID?"
+				redirect "/employer/employee"
+			end		
+		elsif current_employer.role ==2
+			if Employee.find_by_employee_id($id).employer_id== current_employer.user_employer_id
+				haml :profile
+
+			else
+				flash[:err5]= "Incorrect employee ID?"
+				redirect "/employer"
+			end	
+		end	
 	end
 end
 
+get "/employer/employee/delete/:id" do 
+	check_authentication
+	@id = params[:id]
+	employee = Employee.find_by_employee_id(@id)
+	if employee.employer_id == current_employer.id
+		employee.delete
+		flash[:message] = "Employee has been removed!"
+		redirect "/employer/employee"
+	else 
+		flash[:error] = "Error. Please retry!"
+		redirect "/employer/employee/#{@id}"
+	end
+end
 
 get "/employer/employee/:id/edit" do 
 	check_authentication
@@ -430,6 +473,29 @@ get "/employer/employee/:id/edit" do
 	haml :edit_profile
 end
 
+get "/employer/employee/send_mail/:id" do
+	check_authentication
+	@id= params[:id]
+	haml :employer_mail
+end
+
+get "/employer/employee/mail/:id" do
+	check_authentication
+	@id= params[:id]
+	employee= Employee.find_by_employee_id(@id)
+	if employee.employer_id == current_employer.id
+
+		settings.mailer.deliver(from: current_employer.email,
+	               to: employee.email,
+	               subject: params[:subject],
+	               text_body: params[:content]             
+	               )
+		redirect "/employer/employee/#{@id}"
+	else
+
+		redirect "/employer"
+	end
+end
 
 get "/employer/employee/:id/edit_employee" do
 	check_authentication
@@ -481,3 +547,42 @@ get '/employer/search_employee' do
 	@code = current_employer.id
 	haml :search_employee
 end
+
+get "/employer/employee/message/:id" do
+	check_authentication
+	@id = params[:id]
+	haml :message
+end
+
+get "/employer/message/:id" do
+	check_authentication
+	@id = params[:id]
+	@content = params[:message]
+	if current_employer.role ==1 
+		if @content != ""
+			message = Message.create({sender_id: current_employer.id, reciever_id: @id, message: @content})
+			if message.errors.empty?
+				flash[:message] = " message has been sent" 
+				redirect "/employer/employee/#{@id}"
+			else
+				flash[:message] = " message has not been sent"
+				redirect "/employer/employee/message/#{@id}"
+			end
+		else
+			flash[:message] = " message has not been sent"
+				redirect "/employer/employee/message/#{@id}"
+		end
+	else
+		redirect "/employer"
+	end
+end
+
+get "/employer/message/archive/:id" do 
+	check_authentication
+	@id = params[:id]
+	message = Message.find(@id)
+	message.archive = 1
+	message.save
+	redirect "/employer"
+end
+ 

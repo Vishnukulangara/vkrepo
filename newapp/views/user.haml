@@ -7,7 +7,9 @@
 		%p 
 			User ID: 
 			= Employer.find(@id).id
-		
+		%p
+			email ID
+			=Employer.find(@id).email
 		%button{:onclick => "myFunction()", :type => "button"}Edit user 
 		:javascript
 			function myFunction() { document.getElementById("mydiv").style.display = "block"; }

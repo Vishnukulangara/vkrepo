@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160804102118) do
+ActiveRecord::Schema.define(version: 20160805134909) do
 
   create_table "asset_categories", force: :cascade do |t|
     t.integer "category_id",    limit: 4
@@ -77,6 +77,15 @@ ActiveRecord::Schema.define(version: 20160804102118) do
   end
 
   add_index "login_histories", ["user_id"], name: "index_login_histories_on_user_id", using: :btree
+
+  create_table "messages", force: :cascade do |t|
+    t.string   "message",     limit: 255
+    t.integer  "sender_id",   limit: 4
+    t.integer  "reciever_id", limit: 4
+    t.integer  "archive",     limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name",      limit: 255

@@ -11,6 +11,8 @@ require 'oauth2'
 require 'table_print'
 require 'will_paginate'
 require 'will_paginate/active_record'
+require 'pony'
+require 'postmark'
 
 
 
@@ -33,7 +35,8 @@ set :database, {
   username: 'vishnuk',
   password: 'password'
 }
-
+your_api_token = 'efc0dfeb-6f9c-41b4-8789-f2794c71e93f'
+set :mailer , Postmark::ApiClient.new(your_api_token, http_open_timeout: 15)
 class WebApp < Sinatra::Application
   enable :session
   set :session_secret => 'So0perSeKr3t!'
@@ -42,6 +45,8 @@ class WebApp < Sinatra::Application
 	#use Rack::Session::Cookie #,:secret => 'some_secret'
   G_API_CLIENT= ENV['G_API_CLIENT']
   G_API_SECRET= ENV['G_API_SECRET']
+  
+  #mailer = Postmark::ApiClient.new(your_api_token, http_open_timeout: 15)
 
   def g_auth
     @email=session[:current_employee_email]
@@ -133,9 +138,12 @@ class WebApp < Sinatra::Application
     uri.to_s
   end
 
+  
+
 end
 
 require_relative 'models/employers.rb'
+require_relative 'models/messages.rb'
 require_relative 'models/assets.rb'
 require_relative 'models/asset_categories.rb'
 require_relative 'models/employees.rb'

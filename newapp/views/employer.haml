@@ -73,27 +73,28 @@
 						%td= t.email
 						%tr
 
-		%button{:onclick => "myFunction()", :type => "button"}
-			-if current_employer.role == 1
-				Edit Admin Details
-			-else
-				Change Password
+		%button{:onclick => "myFunction()", :type => "button"} 
+			Change Password
+			/ -if current_employer.role == 1
+			/ 	Edit Admin Details
+			/ -else
+				
 		:javascript
 			function myFunction() { document.getElementById("mydiv").style.display = "block"; }
 		%div#mydiv
 			:css
 				#mydiv {display:none;}
 			%form{:action => "/employer/edit/#{current_employer.id}", :method => "get"}
-				-if current_employer.role==1
-					Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					%input{ :type => "text", :name => "name"}
-					%br/
-					email ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					%input{:name => "email", :type => "email"}
-					%br/
+				/ -if current_employer.role==1
+				/ 	Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				/ 	%input{ :type => "text", :name => "name"}
+				/ 	%br/
+				/ 	email ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				/ 	%input{:name => "email", :type => "email"}
+				/ 	%br/
 				
 								
-				New Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				New Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				%input{:name => "password", :type => "password"}
 				%br/
 				
@@ -107,5 +108,83 @@
 				%br/
 		%br/
 
-		%a{ :href => "/logout"}Logout
+	%button{:onclick => "myFunction3()", :type => "button"} Recieved Messages
+    
+	:javascript
+		function myFunction3() { 
+			document.getElementById("message").style.display = "block";}
+	%div#message
+		:css
+			#message {display:none;}
+			table, th, td {border: 1px solid black; text-align : left;}
+			table {border-collapse: collapse;}
+			a {text-decoration: none;} 
+		%table
+			%tr
+				%th  Message
+				%th  Sender
+				%th  sent at:
+			%tr
+			-Message.order("created_on DESC").where(reciever_id: current_employer.id).find_each do |t|
+				%td
+					%a{ :href => "/employer/message/archive/#{t.id}"}= t.message 
+				%td
+					=Employee.find_by_employee_id(t.sender_id).name
+				%td= t.created_at
+				%tr
+	%button{:onclick => "myFunction4()", :type => "button"}  Sent Messages
+	:javascript
+		function myFunction4() { 
+			document.getElementById("message1").style.display = "block";}
+	%div#message1
+		:css
+			#message1 {display:none;}
+			table, th, td {border: 1px solid black; text-align : left;}
+			table {border-collapse: collapse;}
+			a {text-decoration: none;} 
+		%table
+			%tr
+				%th  Message
+				%th  Sent to:
+				%th  sent at:
+			%tr
+			-Message.where(sender_id: current_employer.id).order("DESC").find_each do |t|
+				%td
+					%a{ :href => "/employer/message/archive/#{t.id}"}= t.message 
+				%td =Employee.find_by_employee_id(t.reciever_id).name
+				%td= t.created_at
+				%tr
+	%button{:onclick => "myFunction5()", :type => "button"}  Archived Messages
+	:javascript
+		function myFunction5() { 
+			document.getElementById("message3").style.display = "block";}
+	%div#message3 
+		:css
+			#message3 {display:none;}
+			table, th, td {border: 1px solid black; text-align : left;}
+			table {border-collapse: collapse;}
+			a {text-decoration: none;} 
+		%table
+			%tr
+				%th  Message
+				%th  Sent by:
+				%th  sent at:
+				%th  
+				%th  Message
+				%th  Sent to:
+				%th  sent at:
+			%tr
+			-Message.where(sender_id: current_employer.id, archive: 1).order("DESC").find_each do |t|
+			
+				%td= t.message 
+				%td=Employee.find_by_employee_id(t.reciever_id).name
+				%td= t.created_at
+				%td		
+			-Message.where(reciever_id: current_employer.id, archive: 1).order("DESC").find_each do |s|		
+				%td= s.message 
+				%td=Employee.find_by_employee_id(s.sender_id).name
+				%td= s.created_at
+				%tr
+	%br/
+	%a{ :href => "/logout"}Logout
 			

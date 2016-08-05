@@ -1,0 +1,14 @@
+%html
+	%head
+		%title employer mail
+	%body
+		%h3 Input subject & contents
+		%form{ :action => "/employer/employee/mail/#{@id}", :method => 'get' }
+			subject:
+			%input{ :type => 'text', :name => 'subject'} 
+			%br/
+			content:
+			%input{ :type => 'text', :name => 'content'}
+			%br/
+			%input{ :type =>'submit', :value => 'send'}
+			%br/

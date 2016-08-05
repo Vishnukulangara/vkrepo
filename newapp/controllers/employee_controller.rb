@@ -115,3 +115,27 @@ get "/employee/employee/:id" do
   @id = params[:id]
   haml :employee_employee
 end
+
+get "/employee/employer/message" do
+  
+  
+  haml :message
+end
+
+get "/employee/message" do
+  
+  
+  @content = params[:message]
+  if @content != ""
+    message = Message.create({sender_id: current_employee.employee_id, reciever_id: current_employee.employer_id, message: @content})
+    if message.errors.empty?
+      flash[:message] = " message has been sent" 
+      redirect "/employees/#{current_employee.employee_id}"
+    else
+      flash[:message] = " message has not been sent"
+      redirect "/employees/#{current_employee.employee_id}"
+    end
+  else
+    redirect "/employees/#{current_employee.employee_id}"
+  end
+end

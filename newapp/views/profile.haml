@@ -42,10 +42,25 @@
 					%td= employee.section
 					%br/
 
-
-		%form{ :action => "/employer/employee/#{$id}/edit", :method => "get"}
-			%input{ :type => "submit", :value => "edit info"}
+		-if current_employer.role==1
 		
-		-p $id
-		%a{:href => "/employer/employee"}back
+			%form{ :action => "/employer/employee/#{$id}/edit", :method => "get"}
+				%input{ :type => "submit", :value => "edit info"}
+			%br/
+			%a{ :href => "/employer/employee/delete/#{$id}"} Remove Employee
+			%br/
+			%br/
+			%a{ :href => "/employer/employee/send_mail/#{$id}"}Send email
+			%br/
+			%br/
+			%a{ :href => "/employer/employee/message/#{$id}"}Send message
+			%br/
+			%br/
+			%a{:href => "/employer/employee"}back
 
+		-else
+			%a{:href => "/employer"}back
+
+
+		
+		
