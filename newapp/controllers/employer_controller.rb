@@ -586,3 +586,72 @@ get "/employer/message/archive/:id" do
 	redirect "/employer"
 end
  
+get "/employer/message/unarchive/:id" do
+	check_authentication
+	@id = params[:id]
+	message = Message.find(@id)
+	message.archive = 0
+	message.save
+	redirect "/employer"
+end
+
+get '/employer/newsletter' do
+	check_authentication
+	haml :newsletter
+end
+
+get '/employer/newsletter/send' do
+	check_authentication
+	if current_employer.role ==1 
+		if params[:all]=="on"
+			scheduler = Rufus::Scheduler.new
+			scheduler.at params[:schedule_at] do
+			  Employee.where(employer_id: current_employer.id).find_each do |employee|
+			  	settings.mailer.deliver(from: current_employer.email,
+	               to: employee.email,
+	               subject: params[:subject] ,
+	               text_body: params[:area]             
+	               )
+
+			  # 	message = Message.create({sender_id: current_employer.id, reciever_id: employee.employee_id, message: params[:content]})
+			  # 	if message.errors.empty?
+					# 	flash[:message] = " message has been sent" 
+					# 	redirect "/employer/newsletter"
+					# else
+					# 	flash[:message] = " message has not been sent"
+					# 	redirect "/employer/newsletter"
+					# end
+					
+				end
+				
+			end
+			redirect "/employer/newsletter"
+		else
+			
+			scheduler = Rufus::Scheduler.new
+			scheduler.at params[:schedule_at] do
+				Employee.where(employer_id: current_employer.id).find_each do |e|
+					if params[:"#{e.employee_id}"]== "on"
+						settings.mailer.deliver(from: current_employer.email,
+	               to: e.email,
+	               subject: params[:subject],
+	               html_body: params[:area] )
+						# message = Message.create({sender_id: current_employer.id, reciever_id: e.employee_id, message: params[:content]})
+				  # 	if message.errors.empty?
+						# 	flash[:message] = " message has been sent" 
+						# 	redirect "/employer/newsletter"
+						# else
+						# 	flash[:message] = " message has not been sent"
+						# 	redirect "/employer/newsletter"
+						# end
+						
+					end
+					
+				end
+				
+			end
+			redirect "/employer/newsletter"
+		end
+		
+	end
+end

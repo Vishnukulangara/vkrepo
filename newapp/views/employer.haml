@@ -132,6 +132,8 @@
 					=Employee.find_by_employee_id(t.sender_id).name
 				%td= t.created_at
 				%tr
+		%p click on the message to archive
+	%br/
 	%button{:onclick => "myFunction4()", :type => "button"}  Sent Messages
 	:javascript
 		function myFunction4() { 
@@ -151,10 +153,12 @@
 			-Message.where(sender_id: current_employer.id).order("DESC").find_each do |t|
 				%td
 					%a{ :href => "/employer/message/archive/#{t.id}"}= t.message 
-				%td =Employee.find_by_employee_id(t.reciever_id).name
+				%td=Employee.find_by_employee_id(t.reciever_id).name
 				%td= t.created_at
 				%tr
-	%button{:onclick => "myFunction5()", :type => "button"}  Archived Messages
+		%p click on the message to archive
+	%br/
+	%button{:onclick => "myFunction5()", :type => "button"}  Archived Messages(Recieved)
 	:javascript
 		function myFunction5() { 
 			document.getElementById("message3").style.display = "block";}
@@ -169,22 +173,61 @@
 				%th  Message
 				%th  Sent by:
 				%th  sent at:
-				%th  
+				/ %th  
+				/ %th  Message
+				/ %th  Sent to:
+				/ %th  sent at:
+			%tr
+			/ -Message.where(sender_id: current_employer.id, archive: 1).order("DESC").find_each do |t|
+			
+			/ 	%td
+			/ 		%a{ :href => "/employer/message/unarchive/#{t.id}"}= t.message 
+			/ 	%td=Employee.find_by_employee_id(t.reciever_id).name
+			/ 	%td= t.created_at
+			/ 	%td		
+			-Message.where(reciever_id: current_employer.id, archive: 1).order("DESC").find_each do |s|		
+				%td
+					%a{ :href => "/employer/message/unarchive/#{s.id}"}= s.message 
+				%td=Employee.find_by_employee_id(s.sender_id).name
+				%td= s.created_at
+				%tr
+	%br/
+	%button{:onclick => "myFunction6()", :type => "button"}  Archived Messages(sent)
+	:javascript
+		function myFunction6() { 
+			document.getElementById("message4").style.display = "block";}
+	%div#message4 
+		:css
+			#message4 {display:none;}
+			table, th, td {border: 1px solid black; text-align : left;}
+			table {border-collapse: collapse;}
+			a {text-decoration: none;} 
+		%table
+			%tr
+				/ %th  Message
+				/ %th  Sent by:
+				/ %th  sent at:
+				/ %th  
 				%th  Message
 				%th  Sent to:
 				%th  sent at:
 			%tr
 			-Message.where(sender_id: current_employer.id, archive: 1).order("DESC").find_each do |t|
 			
-				%td= t.message 
+				%td
+					%a{ :href => "/employer/message/unarchive/#{t.id}"}= t.message 
 				%td=Employee.find_by_employee_id(t.reciever_id).name
 				%td= t.created_at
-				%td		
-			-Message.where(reciever_id: current_employer.id, archive: 1).order("DESC").find_each do |s|		
-				%td= s.message 
-				%td=Employee.find_by_employee_id(s.sender_id).name
-				%td= s.created_at
-				%tr
+				%tr		
+			/ -Message.where(reciever_id: current_employer.id, archive: 1).order("DESC").find_each do |s|		
+			/ 	%td
+			/ 		%a{ :href => "/employer/message/unarchive/#{s.id}"}= s.message 
+			/ 	%td=Employee.find_by_employee_id(s.sender_id).name
+			/ 	%td= s.created_at
+			/ 	%tr
+	%br/
+	%br/
+	%a{ :href => "/employer/newsletter"}Schedule Newsletter
 	%br/
 	%a{ :href => "/logout"}Logout
 			

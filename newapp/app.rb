@@ -13,6 +13,7 @@ require 'will_paginate'
 require 'will_paginate/active_record'
 require 'pony'
 require 'postmark'
+require 'rufus-scheduler'
 
 
 
@@ -53,7 +54,6 @@ class WebApp < Sinatra::Application
     #@access_token = session[:access_token]
     
     if @email=="" || @email.nil?
-      p "-----------------------------------------------------"
       
       access_token = client.auth_code.get_token(params[:code], :redirect_uri => redirect_uri)
       session[:access_token] = access_token.token
