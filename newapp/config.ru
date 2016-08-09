@@ -1,2 +1,8 @@
 require_relative 'app.rb'
-run WebApp
+require 'resque/server'
+
+#run WebApp
+
+run Rack::URLMap.new \
+  "/"       => WebApp.new,
+  "/resque" => Resque::Server.new

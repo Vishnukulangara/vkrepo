@@ -11,9 +11,13 @@ require 'oauth2'
 require 'table_print'
 require 'will_paginate'
 require 'will_paginate/active_record'
-require 'pony'
+
 require 'postmark'
 require 'rufus-scheduler'
+require 'resque'
+require 'resque-scheduler'
+require 'redis'
+
 
 
 
@@ -48,6 +52,26 @@ class WebApp < Sinatra::Application
   G_API_SECRET= ENV['G_API_SECRET']
   
   #mailer = Postmark::ApiClient.new(your_api_token, http_open_timeout: 15)
+
+
+  # scheduler = Rufus::Scheduler.new
+  #   scheduler.every '1s' do
+  #     nl = NewsLetter.find_by_schedule_at(Time.now)
+  #     p nl
+  #     unless nl.nil?        
+  #       nl.recipients.each do |employee|
+  #         @email = Employee.find_by_employee_id(employee).email
+  def mail
+    settings.mailer.deliver(from: 'vishnukulangara@qburst.com',
+           to: 'vishnukulangara@qburst.com',
+           subject: "nl.subject" ,
+           text_body: "nl.content"             
+           )
+  end
+  #       end
+  #     end
+      
+  #   end
 
   def g_auth
     @email=session[:current_employee_email]
@@ -143,6 +167,7 @@ class WebApp < Sinatra::Application
 end
 
 require_relative 'models/employers.rb'
+require_relative 'models/news_letters.rb'
 require_relative 'models/messages.rb'
 require_relative 'models/assets.rb'
 require_relative 'models/asset_categories.rb'
@@ -150,3 +175,4 @@ require_relative 'models/employees.rb'
 require_relative 'models/companies.rb'
 require_relative 'controllers/employer_controller.rb'
 require_relative 'controllers/employee_controller.rb'
+require_relative 'jobs/news_letter_job.rb'

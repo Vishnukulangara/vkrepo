@@ -1,9 +1,11 @@
 get '/' do 
+
+	#Resque.enqueue(NewsLetterJob)
 	flash[:show] = "Please select your choice"
 	haml :index
 end
 
-get '/login_employer' do 
+get '/login_employer' do
 
 	flash[:message] = "Please enter the fields with correct information"
 	haml :login
@@ -603,55 +605,51 @@ end
 get '/employer/newsletter/send' do
 	check_authentication
 	if current_employer.role ==1 
-		if params[:all]=="on"
-			scheduler = Rufus::Scheduler.new
-			scheduler.at params[:schedule_at] do
-			  Employee.where(employer_id: current_employer.id).find_each do |employee|
-			  	settings.mailer.deliver(from: current_employer.email,
-	               to: employee.email,
-	               subject: params[:subject] ,
-	               text_body: params[:area]             
-	               )
+		#newsletter= NewsLetter.create({content: params[:area], subject: params[:subject], schedule_at: params[:schedule_at]})
+		if params[:all]=="on"			
+			Employee.where(employer_id: current_employer.id).find_each do |employee|
+				#newsletter.recipients<<employee.employee_id
+				Resque.enqueue_at(params[:schedule_at], NewsLetterJob, params[:subject], params[:area],current_employer.email,employee.email)
+			end
+			#newsletter.save
+			#if newsletter.errors.empty?
+			redirect "/employer/newsletter"
+			# else
+			# 	redirect "/employer"
+		
 
-			  # 	message = Message.create({sender_id: current_employer.id, reciever_id: employee.employee_id, message: params[:content]})
-			  # 	if message.errors.empty?
-					# 	flash[:message] = " message has been sent" 
-					# 	redirect "/employer/newsletter"
-					# else
-					# 	flash[:message] = " message has not been sent"
-					# 	redirect "/employer/newsletter"
-					# end
-					
-				end
-				
-			end
-			redirect "/employer/newsletter"
-		else
 			
-			scheduler = Rufus::Scheduler.new
-			scheduler.at params[:schedule_at] do
-				Employee.where(employer_id: current_employer.id).find_each do |e|
-					if params[:"#{e.employee_id}"]== "on"
-						settings.mailer.deliver(from: current_employer.email,
-	               to: e.email,
-	               subject: params[:subject],
-	               html_body: params[:area] )
-						# message = Message.create({sender_id: current_employer.id, reciever_id: e.employee_id, message: params[:content]})
-				  # 	if message.errors.empty?
-						# 	flash[:message] = " message has been sent" 
-						# 	redirect "/employer/newsletter"
-						# else
-						# 	flash[:message] = " message has not been sent"
-						# 	redirect "/employer/newsletter"
-						# end
-						
-					end
-					
+
+			
+		else
+			Employee.where(employer_id: current_employer.id).find_each do |employee|
+				if params[:"#{employee.employee_id}"]== "on"
+					#newsletter.recipients<<employee.employee_id
+					Resque.enqueue_at(params[:schedule_at], NewsLetterJob, params[:subject], params[:area],current_employer.email, employee.email)
 				end
-				
 			end
+			# newsletter.save
+			# if newsletter.errors.empty?
 			redirect "/employer/newsletter"
+			# else
+			# 	redirect "/employer"
 		end
+			
+		# 	scheduler = Rufus::Scheduler.new
+		# 	scheduler.at params[:schedule_at] do
+		# 		Employee.where(employer_id: current_employer.id).find_each do |e|
+		# 			if params[:"#{e.employee_id}"]== "on"
+		# 				settings.mailer.deliver(from: current_employer.email,
+	 #               to: e.email,
+	 #               subject: params[:subject],
+	 #               html_body: params[:area] )
+					
+		# 			end
+					
+		# 		end
+				
+		# 	end
+		# 	redirect "/employer/newsletter"
 		
 	end
 end
