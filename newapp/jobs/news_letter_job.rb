@@ -4,7 +4,7 @@ class NewsLetterJob< WebApp
 	set :mailer , Postmark::ApiClient.new(your_api_token, http_open_timeout: 15)
 
   def self.perform(subject, content, employer, employee)
-	 	p "1111111111111133333311111111111111"
+	p "1111111111111133333311111111111111"
   	settings.mailer.deliver(from: employer, to: employee, subject: subject , html_body: content)    
   	puts "finished 222222222222222222222222222222 sending mails"
   

@@ -1,2 +1,6 @@
-do_my_job:
+mail:
+  cron: "*/1 * * * *"
+  queue: mail
   class: NewsLetterJob
+  #args: "subject", "content", "employer", "employee"
+  description: sends email

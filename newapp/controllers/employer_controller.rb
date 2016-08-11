@@ -609,7 +609,8 @@ get '/employer/newsletter/send' do
 		if params[:all]=="on"			
 			Employee.where(employer_id: current_employer.id).find_each do |employee|
 				#newsletter.recipients<<employee.employee_id
-				Resque.enqueue_at(params[:schedule_at], NewsLetterJob, params[:subject], params[:area],current_employer.email,employee.email)
+				#Resque.enqueue_at(params[:schedule_at], NewsLetterJob, params[:subject], params[:area],current_employer.email,employee.email)
+				Resque.enqueue_at(10.seconds.from_now, NewsLetterJob)
 			end
 			#newsletter.save
 			#if newsletter.errors.empty?
@@ -622,10 +623,12 @@ get '/employer/newsletter/send' do
 
 			
 		else
+			
+			schedule_time = (params[:schedule_at].to_time-Time.now)
 			Employee.where(employer_id: current_employer.id).find_each do |employee|
 				if params[:"#{employee.employee_id}"]== "on"
-					#newsletter.recipients<<employee.employee_id
-					Resque.enqueue_at(params[:schedule_at], NewsLetterJob, params[:subject], params[:area],current_employer.email, employee.email)
+					
+					Resque.enqueue_at(schedule_time.seconds.from_now, NewsLetterJob, params[:subject], params[:area],current_employer.email, employee.email)
 				end
 			end
 			# newsletter.save

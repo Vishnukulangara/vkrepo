@@ -1,0 +1,17 @@
+<h1>Login</h1>
+<%= form_for(:user, :url => {:controller => 'users', :action => 'auth'}) do |f| %>
+	<p>
+		<%= f.label :email%>
+		<%= f.email_field :email%>
+	</p>
+	<p>
+		<%= f.label :password%>
+		<%= f.password_field :password%>
+	</p>
+	<p>
+		<%= f.submit %>
+	</p>
+<% end %>
+
+<%= link_to 'New', new_user_path%>
+
