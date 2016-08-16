@@ -1,0 +1,42 @@
+%html
+	%head
+		%title 
+	%body
+		%h2 Update Employee Profile
+		
+		-employee = Employee.find_by_employee_id($id)
+		
+		%h3
+			Name : 
+			=employee.name 
+			
+		%br/
+		
+		%form{ :action=> "/employee/#{$id}/update_profile", :method=> "get"}
+			
+			Address:
+			%input{:type=> "text", :name=>"address"}
+			%br/
+			Bank Account Details: 
+			%input{ :type => "text", :name => "bank_account_details"}			
+			%br/
+			Passport Details:
+			%input{:type=> "text", :name=>"passport_details"}
+			%br/
+			Pancard Number:
+			%input{:type=> "text", :name=>"pancard_no"}
+			%br/
+			
+			Aadhar Card Number:
+			%input{:type=> "text", :name=>"adhar_no"}
+			%br/
+			Qualifications:
+			%input{:type=> "text", :name=>"qualification_details"}
+			%br/
+			
+			%input{ :type=>"submit", :value=>"update"}
+		%br/
+		%br/
+		%a{ :href => "/employees/#{$id}"}Back
+		
+			

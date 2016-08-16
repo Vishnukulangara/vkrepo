@@ -1,0 +1,33 @@
+!!! 5
+%html
+  %head
+    %title create user
+    %style
+      body{ border: 1px solid black;margin:20px;}
+      h2{margin-left:80px;}
+      p1{
+  %body
+    %h2 New User 
+    
+    %form{:action => "/employer/user/create/", :method => "get"}
+      %p1
+        Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{ :type => "text", :name => "name"}
+        %br/
+        email ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{:name => "email", :type => "email"}
+        %br/
+        
+        
+      %p2
+        password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{:name => "password", :type => "password"}
+        %br/
+      %p3
+        confirm password:
+        %input{:name => "password_confirmation", :type => "password"}
+        %br/
+      
+      %input{:type => "submit", :value => "Submit"}
+      %br/
+      %a{:href => "/employer/users"}back

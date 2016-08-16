@@ -47,5 +47,5 @@ end
 gem 'execjs'
 gem 'therubyracer'
 gem 'rake'
-gem 'bcrypt'
+gem 'twitter-bootstrap-rails'
 

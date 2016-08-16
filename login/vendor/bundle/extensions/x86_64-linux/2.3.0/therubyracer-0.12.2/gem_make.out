@@ -1,5 +1,5 @@
 current directory: /home/qburst/vkrepo/login/vendor/bundle/gems/therubyracer-0.12.2/ext/v8
-/home/qburst/.rvm/rubies/ruby-2.3.0/bin/ruby -r ./siteconf20160811-24119-92wzph.rb extconf.rb
+/home/qburst/.rvm/rubies/ruby-2.3.0/bin/ruby -r ./siteconf20160812-7586-1is8ac1.rb extconf.rb
 checking for main() in -lpthread... yes
 creating Makefile
 
@@ -44,4 +44,4 @@ linking shared-object v8/init.so
 
 current directory: /home/qburst/vkrepo/login/vendor/bundle/gems/therubyracer-0.12.2/ext/v8
 make "DESTDIR=" install
-/usr/bin/install -m 0755 init.so ./.gem.20160811-24119-8wxyb1/v8
+/usr/bin/install -m 0755 init.so ./.gem.20160812-7586-gatc7a/v8

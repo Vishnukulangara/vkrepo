@@ -1,0 +1,74 @@
+!!!
+%html
+  %body
+    %h2 EMPLOYEES
+    %p
+    / - flash.keys.each do |type|
+    /   %div{:class => "flash #{type} alert-box radius", "data-alert" => ""}
+    /     = flash[type]
+    /     %a.close{:href => "#"} 
+    
+    -if flash[:msg2]
+      = flash[:msg2]
+    -if flash[:err2]
+      = flash[:err2]
+    -if flash[:msg3]
+      = flash[:msg3]
+    -if flash[:err3]
+      = flash[:err3]
+    -if flash[:err5]
+      = flash[:err5]
+    %br/
+    
+    %button{:onclick => "myFunction2()", :type => "button"} employees list
+    %br/
+        
+    %button{:onclick => "myFunction()", :type => "button"} create employee
+    
+    :javascript
+      function myFunction2() { 
+          document.getElementById("create").style.display = "block";}
+    :javascript
+        function myFunction() { document.getElementById("mydiv").style.display = "block"; }
+    %div#create
+      :css
+        #create {display:none;}
+        table, th, td {border: 1px solid black;}
+        table {border-collapse: collapse;}
+        a {text-decoration: none;} 
+      %table
+        %tr
+          %th  Name
+          %th  email id
+        %tr
+          -Employee.where(employer_id: current_employer.id).find_each do |t|
+            %td 
+              %a{ :href =>"/employer/employee/#{t.employee_id}"}= t.name 
+            %td= t.email
+            %tr
+
+    %div#mydiv
+      :css 
+        #mydiv {display:none;}
+      <html>
+      <head><title>signup</title>
+      </head>
+      <body><pre><h1>Create new employee</h2>      
+      
+      <form action="/employer/employee/new" method="get">
+      Name:               <input type="text" name="name"><br>
+      Date of Birth       <input type="date" name="dob"><br>
+      email ID:           <input type="email" name="email"><br>
+      Address:            <input type="text" name="address"><br>
+      Date of Employment  <input type="date" name="joining_date"><br>
+      Employment Status   <input type="text" name="status"><br>
+      Section             <input type="text" name="section"><br>
+      <input type="submit" value="Save">
+      </form></pre>
+      <body/>
+      <html/>
+    
+    %br/
+    %a{ :href => "/employer"}back
+
+    

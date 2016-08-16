@@ -1,5 +1,5 @@
 current directory: /home/qburst/vkrepo/login/vendor/bundle/gems/binding_of_caller-0.7.2/ext/binding_of_caller
-/home/qburst/.rvm/rubies/ruby-2.3.0/bin/ruby -r ./siteconf20160811-10133-15eq65t.rb extconf.rb
+/home/qburst/.rvm/rubies/ruby-2.3.0/bin/ruby -r ./siteconf20160812-25526-cqfccu.rb extconf.rb
 
 current directory: /home/qburst/vkrepo/login/vendor/bundle/gems/binding_of_caller-0.7.2/ext/binding_of_caller
 make "DESTDIR=" clean

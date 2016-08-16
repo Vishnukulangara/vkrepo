@@ -1,0 +1,12 @@
+%html
+  %body
+  %h2 LOGIN
+  %form{:action =>'/login', :method=>'post'}
+    email:
+    %input{:type=>'text', :name=>'email', :size=>'25'}
+    %br/
+    password:
+    %input{:type=>'password', :name=>'password', :size=>'25'}
+    %br/
+    %br/
+    %input{:type=>'submit', :value=>'SEND'}

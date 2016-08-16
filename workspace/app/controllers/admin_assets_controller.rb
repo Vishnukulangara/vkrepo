@@ -1,0 +1,2 @@
+class AdminAssetsController < ApplicationController
+end

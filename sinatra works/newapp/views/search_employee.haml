@@ -1,0 +1,49 @@
+%html
+	%head
+		%title  employee_search
+		:css
+			a{text-decoration : none;}
+	%body
+	%h3 Search Result
+	-tag = @input
+	
+	-emp= current_employer
+	-if emp.nil?
+
+		-if current_employee.employee_id == @code
+			-flag=0
+			-Employee.where("name LIKE ? OR email LIKE ? OR id LIKE ? OR section LIKE ? ","%#{tag}%","%#{tag}%","%#{tag}%","%#{tag}%").find_each do |e|
+				-if e.employer_id == current_employee.employer_id		
+					%a{:href =>"/employee/employee/#{e.employee_id}"}= e.name					
+					-flag+=1	
+					%br/				
+			-if flag==0					
+				%h4 No matches found!
+				%br/
+				%a{:href => "/employees/#{current_employee.employee_id}"}back
+		
+				
+	-else
+		-if  @code == emp.id
+			-if emp.role ==1
+				-flag=0
+				-Employee.where("name LIKE ? OR email LIKE ? OR id LIKE ? OR section LIKE ? ","%#{tag}%","%#{tag}%","%#{tag}%","%#{tag}%").find_each do |e|
+					-if e.employer_id == current_employer.id 
+						%a{:href =>"/employer/employee/#{e.employee_id}"}= e.name
+						-flag+=1
+						%br/
+				-if flag==0
+					%h4 No matches found!
+				%br/
+				%a{:href => "/employer"}back
+			-if emp.role ==2
+				-flag=0
+				-Employee.where("name LIKE ? OR email LIKE ? OR id LIKE ? OR section LIKE ? ","%#{tag}%","%#{tag}%","%#{tag}%","%#{tag}%").find_each do |e|
+					-if e.employer_id == current_employer.user_employer_id 
+						%a{:href =>"/employer/employee/#{e.employee_id}"}= e.name
+						-flag+=1
+						%br/
+				-if flag==0
+					%h4 No matches found!
+				%br/
+				%a{:href => "/employer"}back

@@ -1,5 +1,5 @@
 current directory: /home/qburst/vkrepo/login/vendor/bundle/gems/nokogiri-1.6.8/ext/nokogiri
-/home/qburst/.rvm/rubies/ruby-2.3.0/bin/ruby -r ./siteconf20160811-10133-ss0ckc.rb extconf.rb
+/home/qburst/.rvm/rubies/ruby-2.3.0/bin/ruby -r ./siteconf20160812-25526-g9cyxu.rb extconf.rb
 Using pkg-config version 1.1.7
 checking if the C compiler accepts ... yes
 Building nokogiri using packaged libraries.
@@ -251,4 +251,4 @@ rm -rf /home/qburst/vkrepo/login/vendor/bundle/gems/nokogiri-1.6.8/ports
 
 current directory: /home/qburst/vkrepo/login/vendor/bundle/gems/nokogiri-1.6.8/ext/nokogiri
 make "DESTDIR=" install
-/usr/bin/install -m 0755 nokogiri.so ./.gem.20160811-10133-19kns6u/nokogiri
+/usr/bin/install -m 0755 nokogiri.so ./.gem.20160812-25526-1fx8uym/nokogiri

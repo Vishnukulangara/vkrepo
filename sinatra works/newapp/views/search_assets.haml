@@ -1,0 +1,32 @@
+%html
+	%head
+		%title asset search
+		:css
+			a{text-decoration : none;}
+	%body
+	-tag = @tag
+	-flag=0
+	-Asset.where("asset_name LIKE ? OR asset_category LIKE ? OR asset_type LIKE ? OR asset_id LIKE ? ","%#{tag}%","%#{tag}%","%#{tag}%","%#{tag}%").find_each do |e|
+		-if current_employer.role ==1
+			-if e.employer_id == current_employer.id 
+				%table
+					%tr
+						%td 
+							%a{:href =>"/employer/asset/#{e.asset_id}"}= e.asset_id
+							-flag+=1
+						%td=e.asset_name
+		-else 
+			-if e.employer_id == current_employer.user_employer_id 
+				%table
+					%tr
+						%td 
+							%a{:href =>"/employer/asset/#{e.asset_id}"}= e.asset_id
+							-flag+=1
+						%td=e.asset_name		
+	%br/
+	%br/
+	-if flag==0
+		%h4 No matches found!
+	%br/
+	%br/
+	%a{:href => "/employer/assets/manage"}back

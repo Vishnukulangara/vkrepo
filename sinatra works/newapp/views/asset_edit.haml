@@ -1,0 +1,44 @@
+%html
+	%head
+		%title edit asset profile
+	%body
+		%h2 Edit asset info
+		
+		-asset = Asset.find_by_asset_id(@id)
+		
+		%h3
+			Name : 
+			=asset.asset_name 
+			
+		%br/
+		
+		%form{ :action=> "/employer/assets/#{@id}/edit_asset", :method=> "get"}
+			
+			
+			Asset Name: 
+			%input{ :type => "text", :name => "asset_name"}			
+			%br/
+			Category
+			%input{:type=> "text", :name=>"asset_category"}
+			%br/
+			Type:
+			%input{:type=> "text", :name=>"asset_type"}
+			%br/
+			Specification:
+			%input{:type=> "text", :name=>"specification"}
+			%br/
+			Working Condition
+			%input{:type=> "text", :name=>"working_condition"}
+			%br/
+			Assign to:
+			%input{:type=> "integer", :name=>"assign_to"}
+			%br/
+			
+			%input{ :type=>"submit", :value=>"update"}
+
+	%a{ :href => "/employer/assets/#{@id}/delete"} Remove Asset?
+	=@id
+	%br/
+	%a{ :href => "/employer/assets/"} Back
+
+			

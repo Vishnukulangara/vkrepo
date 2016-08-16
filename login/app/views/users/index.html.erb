@@ -1,17 +1,13 @@
-<h1>Login</h1>
-<%= form_for(:user, :url => {:controller => 'users', :action => 'auth'}) do |f| %>
-	<p>
-		<%= f.label :email%>
-		<%= f.email_field :email%>
-	</p>
-	<p>
-		<%= f.label :password%>
-		<%= f.password_field :password%>
-	</p>
-	<p>
-		<%= f.submit %>
-	</p>
-<% end %>
+<h1>LOGIN</h1>
+<form action="/users/login" method= 'post'>
+  Email:<br>
+  <input type="email" name="email">
+  <br>
+  Password:<br>
+  <input type="password" name="password"><br>
+  <input type='submit' value = "Login">
 
-<%= link_to 'New', new_user_path%>
+</form>
+<br/>
 
+<%= link_to 'Signup', new_user_path %>

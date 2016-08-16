@@ -1,0 +1,17 @@
+<h1>hello <%= current_user.role %></h1>
+<%= link_to 'Company Management', companies_path %> | 
+<% if current_user.role == 'admin'%>
+	<%= link_to 'User management',  admin_users_path%> | 
+	<%= link_to 'Employee management', admin_employees_path %> | 
+<% end %>
+<%= link_to 'Asset Management', admin_assets_path %>
+<br/>
+<% if current_user.role == 'admin'%>
+	<%= link_to 'Edit Admin', edit_admin_path(current_user.id) %>
+
+	
+<% end %>
+<br/>
+<%= link_to 'Change Password', "/admins/edit_password/#{current_user.id}" %>
+<br/>
+<%= link_to 'log out', destroy_user_session_path, method: 'delete' %>

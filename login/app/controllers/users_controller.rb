@@ -1,68 +1,56 @@
 class UsersController < ApplicationController
-
 	def index
 	end
-
-	def auth
-		@user = User.find_by(email: params[:user][:email])
-		
-		unless @user.nil?
-			if @user.password==params[:user][:password]
-				redirect_to @user
-			else
-				render 'index'
-			end
-		else
-			render 'index'
-		end
+	def login
+		render 'new'
 	end
 	def show
 		@user = User.find(params[:id])
 	end
-
 	def new
 		@user = User.new
-	end
 
+	end
 	def edit
 		@user = User.find(params[:id])
+		@edit = "edit"
 	end
-
 	def create
-
-		if params[:user][:password_confirmation]!=""
+		if params[:user]!= ""
 			@user = User.new(user_params)
+			pass_hash(params[:user][:password])
+			@user.password= @pass
+			
 			if @user.save
 				redirect_to @user
-			else 
+			else
 				render 'new'
 			end
 		else
-			@user= User.new
-			@user.save 
 			render 'new'
 		end
-	end
 
+	end
 	def update
 		@user = User.find(params[:id])
-	 
-	  if @user.update(params.require(:user).permit(:name, :email, :mobile_no))
-	    redirect_to @user
-	  else
-	    render 'edit'
-	  end
+		@user.update(user_params)		
+			if @user.save
+				redirect_to @user
+			else
+				render 'edit'
+			end		
 	end
-
 	def destroy
 		@user = User.find(params[:id])
-	  @user.destroy
-	 
-	  redirect_to users_path
+		@user.destroy
+		redirect_to users_path
 	end
-
-	private
+	private 
 		def user_params
-			params.require(:user).permit(:name, :email, :mobile_no, :password, :password_confirmation)		
+			params.require(:user).permit(:email, :name)
 		end
+		def pass_hash(password)
+			@pass = Digest::MD5.hexdigest(password)
+		end
+
 end

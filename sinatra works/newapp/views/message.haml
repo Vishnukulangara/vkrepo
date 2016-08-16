@@ -1,0 +1,33 @@
+%html
+	%head
+		%title message
+	%body
+		%h2 MESSAGE
+		-if current_employer
+
+			-if current_employer.role == 1
+				%form{ :action => "/employer/message/#{@id}", :method => "get"}
+					%input{ :type => "text", :name => "message"}
+					%p maximum 255 characters
+					%br/
+					%br/
+					%input{ :type => "submit" , :value => "send"}
+				%br/
+				%br/
+				%a{ :href => "/employer/employee/#{@id}"}Back
+			-elsif current_employer.role == 2
+				%p You cant sent messages to employees
+				%a{ :href => "/employer"}Back
+		-else
+			%form{ :action => "/employee/message", :method => "get"}
+				%input{ :type => "text", :name => "message"}
+				%p maximum 255 characters
+				%br/
+				%br/
+				%input{ :type => "submit" , :value => "send"}
+			%br/
+			%br/
+			%a{:href => "/employees/#{current_employee.employee_id}"}back
+
+
+

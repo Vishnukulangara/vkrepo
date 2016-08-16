@@ -1,0 +1,19 @@
+current directory: /home/qburst/vkrepo/workspace/vendor/bundle/gems/bcrypt-3.1.11/ext/mri
+/home/qburst/.rvm/rubies/ruby-2.3.0/bin/ruby -r ./siteconf20160816-352-o95z5x.rb extconf.rb
+creating Makefile
+
+current directory: /home/qburst/vkrepo/workspace/vendor/bundle/gems/bcrypt-3.1.11/ext/mri
+make "DESTDIR=" clean
+
+current directory: /home/qburst/vkrepo/workspace/vendor/bundle/gems/bcrypt-3.1.11/ext/mri
+make "DESTDIR="
+compiling crypt_gensalt.c
+compiling bcrypt_ext.c
+compiling crypt_blowfish.c
+compiling wrapper.c
+compiling crypt.c
+linking shared-object bcrypt_ext.so
+
+current directory: /home/qburst/vkrepo/workspace/vendor/bundle/gems/bcrypt-3.1.11/ext/mri
+make "DESTDIR=" install
+/usr/bin/install -m 0755 bcrypt_ext.so ./.gem.20160816-352-1h8y01t

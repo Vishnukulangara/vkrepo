@@ -1,0 +1,43 @@
+!!! 5
+%html
+  %head
+    
+    
+    %style
+      body{ border: 1px solid black;margin:20px;}
+      h2{margin-left:80px;}
+      p1{
+  %body
+    %h2 Update Assets
+    -if flash[:success]
+      =flash[:success]
+    -elsif flash[:error]
+      =flash[:error]
+    -elsif flash[:message]
+      =flash[:message]
+
+    %form{:action => "/employer/assets/update/", :method => "get"}
+      %p1
+
+        Asset ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{ :type => "text", :name => "asset_id"}
+        %br/
+        
+        
+        
+      %p2
+        
+        
+        Assigned to:&nbsp;&nbsp;&nbsp;&nbsp;
+        %input{:name => "assign_to", :type => "integer"}
+        %br/
+      %input{:type => "submit", :value => "Update"}
+      %br/
+    %form{:action=> "/employer/assets/search_asset", :method => "get"}
+      Search Assets:
+      %input{ :type => "search", :name => "search_asset"}
+      ( you can search by name, category, asset ID and type  )
+    %br/
+    
+    %br/
+    %a{:href => "/employer/assets/manage"}Back

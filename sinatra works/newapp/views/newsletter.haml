@@ -1,0 +1,47 @@
+%html
+	%head
+		%script{:src => "//cdn.tinymce.com/4/tinymce.min.js"}
+		:javascript
+			tinymce.init({ selector:'textarea' });
+
+		%title Newsletter
+	%body
+		%p Select Employees
+		%form{:action => "/employer/newsletter/send", :method => "get"}
+
+			%input{:name => "all", :type => "checkbox"}Select All
+			%p OR
+			%button{:onclick => "myFunction()", :type => "button"}Select recipients 
+			%br/
+			:javascript
+				function myFunction() {document.getElementById("create").style.display = "block";}
+			%br/
+			%br/
+			%div#create
+				:css
+					#create {display:none;}
+				-Employee.where(employer_id: current_employer.id).find_each do |e|
+					%input{:name => "#{e.employee_id}", :type => "checkbox"}=e.name
+					%br/
+			Subject:
+			%input{ :type => "text", :name => "subject"}
+			%br/
+			Content:
+			%textarea{:name => "area"}
+			
+			%br/
+			Schedule at:
+			%input{ :type => "datetime", :name => "schedule_at"}
+			(in the format YYYY-MM-DD HH:MM:SS +5:30)
+			%br/
+			%input{:type => "submit", :value => "Submit"}
+			
+
+
+					
+			 
+			
+
+		%a{ :href => "/employer"}Back
+
+

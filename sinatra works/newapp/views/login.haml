@@ -1,0 +1,39 @@
+%html
+	%head
+		%title login
+	%body
+		-if @code == "2"
+			%h2 USER
+		-else
+			%h2 ADMIN
+		/ - flash.keys.each do |type|
+		/ 	%div{:class => "flash #{type} alert-box radius", "data-alert" => ""}
+		/ 		= flash[type]
+		/ 		%a.close{:href => "#"} 
+		
+		-if flash[:failure]
+			= flash[:failure]
+		-if flash[:message]
+			= flash[:message]
+
+
+		%form{ :action => '/employer', :method => 'get' }
+			email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			%input{ :type => 'email', :name => 'email'} 
+			%br/
+			password:
+			%input{ :type => 'password', :name => 'password'}
+			%br/
+			
+			%input{ :type =>'submit', :value => 'login'}
+			%br/
+		-if @code != "2"
+			%form{:action=>'/signup', :method=>'get'}
+				%p
+					If you haven't signed up already please sign up first. 
+					%input{:type=>'submit', :value=> 'SIGN UP'} 
+		/ %form{:method=>'post', :action=>'/login/forgot_pw'}
+		/ 	%input{:type=>'submit', :value=>'FORGOT PASSWORD?'}
+
+		%br/
+		%a{:href => "/"}home

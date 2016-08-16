@@ -1,0 +1,32 @@
+%html
+	%head 
+		%title index
+	:css
+		a:link    {color:green;  text-decoration:none}
+		
+		a:hover   {color:red; background-color:transparent; text-decoration:none}
+		a:active  {color:yellow; background-color:transparent; text-decoration:underline}
+
+	%body 
+		%h3 Login as
+		/ - flash.keys.each do |type|
+		/ 	%div{:class => "flash #{type} alert-box radius", "data-alert" => ""}
+		/ 		= flash[type]
+		/ 		%a.close{:href => "#"} 
+		
+		
+		-if flash[:notice]
+			= flash[:notice]
+		-if flash[:show]
+			= flash[:show]
+		-if flash[:failure]
+			= flash[:failure] 
+		%br/
+	%a{:href => "/login_employer", :decoration =>"none"} Admin? &nbsp;&nbsp;&nbsp;
+	%a{:href => "/login_employee" ,:decoration =>"none"} Employee?&nbsp;&nbsp;&nbsp;
+	%a{:href => "/login_user" ,:decoration =>"none"} User? 
+	%br/
+	%br/
+	%br/
+	%br/
+	%a{:href => "https://mail.google.com/mail/u/0/?logout&hl=en", :target => "_blank"} sign-out from google account 

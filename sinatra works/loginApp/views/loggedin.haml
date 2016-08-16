@@ -1,0 +1,23 @@
+%html
+  %head
+    %title logged_in
+    :CSS
+      body{margin :25px}
+
+  %body
+    - flash.keys.each do |type|
+      %div{:class => "flash #{type} alert-box radius", "data-alert" => ""}
+        = flash[type]
+        %a.close{:href => "#"} 
+    - if flash[:success]
+      - flash[:success]
+    -if flash[:failure]
+      - flash[:failure]
+
+    
+    %form{:method=>'get', :action=>'/logout'}
+      %input{:type=>'submit', :value=>'logout'}
+    %form{:method=>'get', :action=>'/login/user'}
+      %input{:type=>'submit', :value=>'login history'}
+
+    

@@ -1,0 +1,55 @@
+!!!
+%html
+  %body
+    %h2
+      -c = Company.find_by_id(current_employer.id)
+      -if c.nil?
+        -co=Company.find_by_id(current_employer.user_employer_id)
+        =co.company_name
+      -else
+        =c.company_name
+    %form{ :action=> "/employer/edit_info/", :method=> "get"}
+      %button{:onclick => "myFunction()", :type => "button"} latest company info
+      :javascript
+        function myFunction() { document.getElementById("mydiv").style.display = "block"; }
+      %div#mydiv
+        :css
+          #mydiv {display:none;}
+        -c = Company.find_by_id(current_employer.id)
+        -if c.nil?
+          
+          -c=Company.find_by_id(current_employer.user_employer_id)
+               
+        C.E.O:
+        %p
+          -if current_employer.role==1
+            =current_employer.name
+          -else
+            =Employer.find(current_employer.user_employer_id).name
+        Address:
+        %p=c.company_address
+        %br/
+        Website:
+        %p=c.company_website
+      %br/
+      %br/
+      %br/
+      %br/
+        
+
+      -if current_employer.role ==1
+        Company name: 
+        %input{ :type => "text", :name => "company_name"}     
+        %br/
+      Address:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      %input{:type=> "text", :name=>"company_address"}
+      %br/
+      website:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      %input{:type=> "text", :name=>"company_website"}
+      %br/
+      
+      %input{ :type=>"submit", :value=>"update"}
+    
+    
+   
+    %a{ :href => "/employer"}back

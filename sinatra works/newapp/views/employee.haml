@@ -1,0 +1,147 @@
+%html
+	%head
+		%title employee
+	%body
+		/ - flash.keys.each do |type|
+		/ 	%div{:class => "flash #{type} alert-box radius", "data-alert" => ""}
+		/ 		= flash[type]
+		/ 		%a.close{:href => "#"} 
+		
+		-if flash[:err4]
+			= flash[:err4]
+		-if flash[:msg4]
+			= flash[:msg4]
+		
+		
+		%h2=Company.find_by_id(current_employee.employer_id).company_name
+		%h4= current_employee.name
+		%br/
+		%button{:onclick => "myFunction()", :type => "button"} Employee Profile
+    
+		:javascript
+			function myFunction() { 
+				document.getElementById("create").style.display = "block";}
+
+		%div#create
+			:css
+				#create {display:none;}
+				table, th, td {border: 1px solid black; text-align : left;}
+				table {border-collapse: collapse;}
+				a {text-decoration: none;} 
+			%table
+				%tr
+					%th  Name
+					%td= current_employee.name 
+				%tr				
+					%th employee ID						
+					%td= current_employee.employee_id
+				%tr				
+					%th email ID						
+					%td= current_employee.email
+				%tr				
+					%th Date of Birth				
+					%td= current_employee.date_of_birth
+				%tr				
+					%th Address					
+					%td= current_employee.address
+				%tr				
+					%th Date of Employment Commenced				
+					%td= current_employee.date_of_joining
+				%tr				
+					%th Employment Status					
+					%td= current_employee.employment_status
+				%tr				
+					%th Employment Section					
+					%td= current_employee.section
+				%tr				
+					%th Bank Account Details						
+					%td= current_employee.bank_account_details
+				%tr				
+					%th Pancard Number				
+					%td= current_employee.pancard_no
+				%tr				
+					%th Aadhar Card Number						
+					%td= current_employee.adhar_no
+				%tr				
+					%th Passport Details						
+					%td= current_employee.passport_details
+				%tr				
+					%th Qualification Details						
+					%td= current_employee.qualification_details
+			%a{ :href => "/employee/#{current_employee.employee_id}/update_info"}Update Profile
+					
+		%br/
+		%button{:onclick => "myFunction2()", :type => "button"} Employee's Assets
+    
+		:javascript
+			function myFunction2() { 
+				document.getElementById("assets").style.display = "block";}
+		%div#assets
+			:css
+				#assets {display:none;}
+				table, th, td {border: 1px solid black; text-align : left;}
+				table {border-collapse: collapse;}
+				a {text-decoration: none;} 
+			%table
+				%tr
+					%th  Asset name
+					%th  Asset id
+				%tr
+				-Asset.where(employee_id: current_employee.employee_id).find_each do |t|
+					%td= t.asset_name  
+
+					%td
+						%a{ :href =>"/employee/asset/#{t.asset_id}"}= t.asset_id
+
+					%tr
+	%br/
+	%form{:action=> "/employee/search_employee", :method => "get"}
+		Search for employees:
+		%input{ :type => "search", :name => "search_employee"}
+		( you can search by name, employer ID, email ID and section of the employee)
+		%br/
+	%br/
+	%button{:onclick => "myFunction3()", :type => "button"} Messages
+    
+	:javascript
+		function myFunction3() { 
+			document.getElementById("message").style.display = "block";}
+	%div#message
+		:css
+			#message {display:none;}
+			table, th, td {border: 1px solid black; text-align : left;}
+			table {border-collapse: collapse;}
+			a {text-decoration: none;} 
+		%table
+			%tr
+				%th  Message
+				%th  sent at:
+			%tr
+			-Message.where(sender_id: current_employee.employer_id).order("created_at DESC").find_each do |t|
+				%td= t.message 
+				%td= t.created_at
+				%tr
+	%button{:onclick => "myFunction4()", :type => "button"}  Sent Messages
+	:javascript
+		function myFunction4() { 
+			document.getElementById("message1").style.display = "block";}
+	%div#message1
+		:css
+			#message1 {display:none;}
+			table, th, td {border: 1px solid black; text-align : left;}
+			table {border-collapse: collapse;}
+			a {text-decoration: none;} 
+		%table
+			%tr
+				%th  Message
+				%th  sent at:
+			%tr
+			-Message.where(sender_id: current_employee.employee_id).order("created_at DESC").find_each do |t|
+				%td= t.message 
+				%td= t.created_at
+				%tr
+	%br/
+	%a{ :href => "/employee/employer/message"}Send message
+	%br/
+	%a{ :href => "/employee/logout"}Logout				
+			
