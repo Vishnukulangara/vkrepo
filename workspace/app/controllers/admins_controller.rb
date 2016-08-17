@@ -27,5 +27,8 @@ class AdminsController < ApplicationController
 			render 'edit_password'
 		end
 	end
+	def search_employee
+		@flag = 0
+	end
 
 end

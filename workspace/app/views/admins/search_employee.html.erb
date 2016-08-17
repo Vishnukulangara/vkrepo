@@ -1,0 +1,14 @@
+<h3>Search Results</h3>
+
+<% Employee.where("name LIKE ? OR email LIKE ? OR id LIKE ? OR section LIKE ? ","%#{params[:employee][:search_employee]}%","%#{params[:employee][:search_employee]}%","%#{params[:employee][:search_employee]}%","%#{params[:employee][:search_employee]}%").find_each do |e| %>
+						
+	<%= link_to e.name, employee_path(e) %>					
+	<% @flag+=1 %>	
+	<br/>
+<% end %>
+
+<% if @flag==0 %>					
+	<h4> No matches found!</h4>
+<% end %>
+<br/>
+<%= link_to 'back' , admins_path %>

@@ -1,0 +1,19 @@
+<h2><%= @admin_asset.name %></h2>
+<h3>Asset Details </h3>
+<ul>
+	<li>ID:   <%= @admin_asset.asset_id %></li>
+	<li><%= @admin_asset.asset_category %></li>
+	<li><%= @admin_asset.asset_type %></li>
+	<li><%= @admin_asset.specification %></li>
+	<li>
+		<% if @admin_asset.assigned_to == 0%>
+			Un-assigned
+		<% else %>
+			<%= link_to Employee.find(@admin_asset.assigned_to).name , employee_path(@admin_asset.assigned_to) %>
+		<% end %>
+	</li>
+</ul>
+	
+<%= link_to 'Edit',  edit_admin_asset_path(@admin_asset) %>|
+<%= link_to 'Delete', admin_asset_path(@admin_asset) , method: :delete, data: { confirm: 'Are you sure?' } %>|
+<%= link_to 'Back', admin_assets_path %>

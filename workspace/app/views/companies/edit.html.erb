@@ -1,0 +1,10 @@
+<%= form_for :company , url: company_path(@company), method: 'patch' do |f|%>
+	Name:<br/>
+	<%= f.text_field :name%><br/>
+	Website:<br/>
+	<%= f.text_field :website %><br/>
+	Address:<br/>
+	<%= f.text_field :address %><br/>
+	<%= f.submit %>
+<% end %>
+<%= link_to 'back', companies_path %>

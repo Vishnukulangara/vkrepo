@@ -1,0 +1,6 @@
+<h2><%= @company.name %></h2>
+<h4><%= @company.website %></h4>
+<h4><%= @company.address %></h4>
+<br/>
+<%= link_to 'Edit Info', edit_company_path(@company) %>|
+<%= link_to 'Back', admins_path %>

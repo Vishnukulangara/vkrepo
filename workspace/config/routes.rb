@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   resources :admins
   resources :companies
   resources :admin_users
-  resources :admin_employees
+  resources :employees
   resources :admin_assets
   get 'home/password_change' => 'home#password_change'
-
+  post 'admins/search_employee' => 'admins#search_employee'
   get 'admins/edit_password/:id' => 'admins#edit_password'
   patch 'admins/update_password/:id' => 'admins#update_password'
 

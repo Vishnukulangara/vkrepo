@@ -1,0 +1,19 @@
+<h4>Assets </h4>
+	<table>
+		<tr>
+			<th>Asset name</th>
+			<th>Asset ID</th>
+		</tr>
+	<% @admin_assets.each do |asset| %>
+		<tr>
+			<td><%= asset.name %></td>
+			<td><%= asset.asset_id %></td>
+			<td><%= link_to 'View',  admin_asset_path(asset.id) %>|</td>
+			<td><%= link_to 'Edit',  edit_admin_asset_path(asset.id) %>|</td>
+			<td><%= link_to 'Delete', admin_asset_path(asset.id) , method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		</tr>
+	 <% end %>
+	</table>
+<br/>
+<%= link_to 'Create Asset', new_admin_asset_path %> |
+<%= link_to 'Back', admins_path %>

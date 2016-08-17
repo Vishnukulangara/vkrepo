@@ -11,7 +11,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816112657) do
+ActiveRecord::Schema.define(version: 20160817142905) do
+
+  create_table "asset_categories", force: :cascade do |t|
+    t.string  "asset_type",        limit: 255
+    t.integer "category_id",       limit: 4
+    t.integer "type_id",           limit: 4
+    t.integer "asset_category_id", limit: 4
+    t.string  "asset_category",    limit: 255
+  end
+
+  create_table "assets", force: :cascade do |t|
+    t.string   "name",           limit: 255
+    t.string   "specification",  limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "asset_type",     limit: 255
+    t.string   "asset_category", limit: 255
+    t.integer  "assigned_to",    limit: 4
+    t.integer  "asset_id",       limit: 4
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "website",    limit: 255
+    t.string   "address",    limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "employees", force: :cascade do |t|
+    t.string "name",                 limit: 255
+    t.string "email",                limit: 255
+    t.string "address",              limit: 255
+    t.date   "date_of_birth"
+    t.date   "date_of_joining"
+    t.string "mobile_no",            limit: 255
+    t.string "employment_status",    limit: 255
+    t.string "section",              limit: 255
+    t.string "bank_account_details", limit: 255
+    t.string "passport_details",     limit: 255
+    t.string "pancard_details",      limit: 255
+    t.string "adhar_card_details",   limit: 255
+    t.string "qualifications",       limit: 255
+    t.string "employee_id",          limit: 255
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
