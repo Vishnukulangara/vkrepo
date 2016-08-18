@@ -1,0 +1,8 @@
+<h3>worXpace</h3>
+<h4>Assets</h4>
+<% employee_id = Employee.find_by_email(current_employee.email).id %>
+<% Asset.where(assigned_to: employee_id).find_each do |asset|%>
+	<%= link_to asset.name,  "/employee_dashboard/show_asset/#{asset.id}" %>
+<% end %>
+<br/><br/>
+<%= link_to 'Back', employee_dashboard_index_path %>

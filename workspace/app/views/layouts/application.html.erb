@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea' });</script>
   <title>Workspace</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
+
 </head>
-<body>
+<body style= 'margin-right:30px; margin-left:20px;'>
+
+	<nav style= "text-align:right;">
+		<% if current_user %>
+			<%= link_to 'log out', destroy_user_session_path, method: 'delete' %>
+		<% else %>
+	      <% if current_employee %>
+	        <% unless Employee.find_by_email(current_employee.email).nil? %>
+	        	<%= link_to "Sign out", signout_path, id: "sign_out" %>
+	        <% else %>
+	        	Employee doesnt exists!!!
+	      	<% end %>
+	      <% end %>
+	     <% end %>
+    </nav>
+
 	<p class="notice"><%= notice %></p>
 	<p class="alert"><%= alert %></p>
 

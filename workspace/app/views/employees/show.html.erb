@@ -78,6 +78,7 @@
 <% end %>
 <br/><br/>
 <% if current_user.role =='admin' %>
+	<%= link_to 'Send email', "/employees/compose_mail/#{@employee.id}" %>|
 	<%= link_to "Edit", edit_employee_path(@employee) %>|
 	<%= link_to "Remove Employee", employee_path(@employee), method: 'delete', data: {confirm: 'are you sure?'} %>|
 <% end %>

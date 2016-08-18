@@ -1,0 +1,17 @@
+
+<h4>Compose email</h4>
+<br/>
+<%= form_for :mail, url: "/employees/send_mail/#{@employee.id}", method: 'post' do |f|%>
+<p>
+Subject:<br/>
+<%= f.text_field :subject %>
+</p>
+<p>
+Content:<br/>
+<%= f.text_area :content%>
+</p>
+<p>
+	<%= f.submit :Send %>
+</p>
+<% end %>
+<%= link_to 'back', employee_path(@employee) %>

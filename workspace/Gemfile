@@ -49,3 +49,5 @@ gem 'therubyracer'
 gem 'rake'
 gem 'twitter-bootstrap-rails'
 gem 'devise'
+gem "omniauth-google-oauth2", "~> 0.2.1"
+gem 'postmark'

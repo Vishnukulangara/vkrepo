@@ -1,0 +1,12 @@
+<% employee = Employee.find_by_email(current_employee.email)%>
+
+<h3>worXpace</h3>
+<%= link_to "Profile", "/employee_dashboard/profile/#{employee.id}" %><br/>
+Search for employees:
+<%=form_for :employee , url: employee_dashboard_search_employee_path, method:  "post" do |f| %>
+	<%=f.search_field :search_employee %>
+<% end %>
+<br/>
+<br/>
+
+<%= link_to "Assets", employee_dashboard_employee_asset_path %>

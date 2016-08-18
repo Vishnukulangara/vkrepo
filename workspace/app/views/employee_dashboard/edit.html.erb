@@ -1,0 +1,42 @@
+<h2>Edit Employee</h2>
+
+<%= form_for @employee, {url: "/employee_dashboard/update/#{@employee.id}", method: 'patch'} do |f| %>
+<p>
+Address:<br/>
+<%= f.text_field :address %>
+</p>
+<p>
+Phone Number:<br/>
+<%= f.text_field :mobile_no %>
+</p>
+
+
+<p>
+Date of Birth:<br/>
+<%= f.date_field :date_of_birth %>
+</p>
+<p>
+Bank Account Details:<br/>
+<%= f.text_field :bank_account_details %>
+</p>
+<p>
+Pancard Details:<br/>
+<%= f.text_field :pancard_details %>
+</p>
+<p>
+passport Details:<br/>
+<%= f.text_field :passport_details %>
+</p>
+<p>
+Adhar Card Details:<br/>
+<%= f.text_field :adhar_card_details %>
+</p>
+
+<p>
+Qualifications:<br/>
+<%= f.text_field :qualifications %>
+</p>
+<br/>
+<p><%= f.submit %></p>
+<% end %>
+<%= link_to 'Back', employees_path %>

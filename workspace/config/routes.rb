@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  get 'employee_dashboard/index'
+
+  get 'sessions/create'
+
+  get 'sessions/destroy'
+  get 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: redirect('/')
+  get 'signout', to: 'sessions#destroy', as: 'signout'
+
+  
+
   get 'home/index'
   resources :admins
   resources :companies
@@ -7,9 +18,16 @@ Rails.application.routes.draw do
   resources :admin_assets
   get 'home/password_change' => 'home#password_change'
   post 'admins/search_employee' => 'admins#search_employee'
+  post 'employee_dashboard/search_employee' => 'employee_dashboard#search_employee'
   get 'admins/edit_password/:id' => 'admins#edit_password'
   patch 'admins/update_password/:id' => 'admins#update_password'
-
+  get 'employee_dashboard/profile/:id' => 'employee_dashboard#profile'
+  get 'employee_dashboard/show_asset/:id' => 'employee_dashboard#show_asset'
+  get 'employee_dashboard/employee_asset' => 'employee_dashboard#employee_asset'
+  get 'employee_dashboard/edit/:id' => 'employee_dashboard#edit'
+  patch 'employee_dashboard/update/:id' => 'employee_dashboard#update'
+  get 'employees/compose_mail/:id' => 'employees#compose_mail'
+  post 'employees/send_mail/:id' => 'employees#send_mail'
   devise_for :users 
   
   # The priority is based upon order of creation: first created -> highest priority.

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817142905) do
+ActiveRecord::Schema.define(version: 20160818071108) do
 
   create_table "asset_categories", force: :cascade do |t|
     t.string  "asset_type",        limit: 255
@@ -30,6 +30,17 @@ ActiveRecord::Schema.define(version: 20160817142905) do
     t.string   "asset_category", limit: 255
     t.integer  "assigned_to",    limit: 4
     t.integer  "asset_id",       limit: 4
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.string   "provider",         limit: 255
+    t.string   "uid",              limit: 255
+    t.string   "name",             limit: 255
+    t.string   "oauth_token",      limit: 255
+    t.datetime "oauth_expires_at"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "email",            limit: 255
   end
 
   create_table "companies", force: :cascade do |t|

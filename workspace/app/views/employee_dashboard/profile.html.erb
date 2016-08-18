@@ -1,0 +1,87 @@
+<% employee= Employee.find(params[:id]) %>
+<h3>worXpace</h3>
+<h3><%= employee.name%></h3>
+<h4>Employee Details</h4>
+<table>
+	<tr>
+		<td>Employee ID</td>
+		<th><%= employee.id%></th>
+	</tr>
+	<tr>
+		<td>email ID</td>
+		<th><%= employee.email%></th>
+	</tr>
+	</tr>
+	<tr>
+		<td>Phone Number</td>
+		<th><%= employee.mobile_no%></th>
+	</tr>
+	</tr>
+
+	</tr>
+	<tr>
+		<td>Date of Birth</td>
+		<th><%= employee.date_of_birth%></th>
+	</tr>
+
+	</tr>
+	<tr>
+		<td>Employment Status</td>
+		<th><%= employee.employment_status%></th>
+	</tr>
+	</tr>
+	<tr>
+		<td>Section</td>
+		<th><%= employee.section%></th>
+	</tr>
+	</tr>
+	<% if current_employee.email == employee.email %>
+		<tr>
+			<td>Address</td>
+			<th><%= employee.address%></th>
+		</tr>
+		</tr>
+		<tr>
+			<td>Date of Employment Commenced</td>
+			<th><%= employee.date_of_joining%></th>
+		</tr>
+	
+
+		<tr>
+			<td>Bank Account Details</td>
+			<th><%= employee.bank_account_details%></th>
+		</tr>
+		</tr>
+		<tr>
+			<td>Adhar Card Details</td>
+			<th><%= employee.adhar_card_details%></th>
+		</tr>
+		</tr>
+		<tr>
+			<td>Pan Card Details</td>
+			<th><%= employee.pancard_details%></th>
+		</tr>
+		</tr>
+		<tr>
+			<td>Passport Details</td>
+			<th><%= employee.passport_details%></th>
+		</tr>
+		</tr>
+		<tr>
+			<td>Qualifications</td>
+			<th><%= employee.qualifications%></th>
+		</tr>
+		</tr>
+	<% end %>
+</table>
+<% if current_employee.email == employee.email %>
+	<%= link_to 'Edit Profile',  "/employee_dashboard/edit/#{employee.id}" %>
+<% else %>
+	<h4>Assets</h4>
+	<% Asset.where(assigned_to: employee.id).find_each do |asset|%>
+		<%= link_to asset.name,  "/employee_dashboard/show_asset/#{asset.id}" %>
+	<% end %>
+	<br/>
+<% end %>
+<br/>
+<%= link_to 'Back', employee_dashboard_index_path %>

@@ -1,0 +1,12 @@
+<h2><%= @asset.name %></h2>
+<h3>Asset Details </h3>
+<ul>
+	<li>ID:   <%= @asset.asset_id %></li>
+	<li><%= @asset.asset_category %></li>
+	<li><%= @asset.asset_type %></li>
+	<li><%= @asset.specification %></li>
+	
+</ul>
+	
+
+<%= link_to 'Back', employee_dashboard_index_path %>
