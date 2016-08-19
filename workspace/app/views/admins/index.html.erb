@@ -20,3 +20,7 @@ Search for employees:
 <br/>
 <%= link_to 'Change Password', "/admins/edit_password/#{current_user.id}" %>
 <br/>
+<% if current_user.role == 'admin'%>
+	<%= link_to 'Messages', messages_path %>
+	<%= link_to 'Newsletters', newsletters_path %>
+<% end %>

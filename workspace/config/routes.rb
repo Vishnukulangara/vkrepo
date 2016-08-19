@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  require 'resque/server'
   get 'employee_dashboard/index'
 
   get 'sessions/create'
@@ -16,6 +17,12 @@ Rails.application.routes.draw do
   resources :admin_users
   resources :employees
   resources :admin_assets
+  resources :messages
+  resources :newsletters
+  get 'messages/archive/:id' => 'messages#archive'
+  get 'messages/unarchive/:id' => 'messages#unarchive'
+  get 'messages/to_employee/:id' => 'messages#to_employee'
+  post 'messages/send_msg/:id' => 'messages#send_msg'
   get 'home/password_change' => 'home#password_change'
   post 'admins/search_employee' => 'admins#search_employee'
   post 'employee_dashboard/search_employee' => 'employee_dashboard#search_employee'
@@ -35,6 +42,9 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'home#index'
+  
+  mount Resque::Server.new, at: "/resque"
+  
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

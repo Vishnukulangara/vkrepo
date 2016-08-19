@@ -51,3 +51,5 @@ gem 'twitter-bootstrap-rails'
 gem 'devise'
 gem "omniauth-google-oauth2", "~> 0.2.1"
 gem 'postmark'
+gem 'resque'
+gem 'resque-scheduler', '~> 4.0'

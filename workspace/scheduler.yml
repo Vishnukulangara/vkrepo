@@ -1,0 +1,6 @@
+mail:
+  cron: "*/1 * * * *"
+  queue: mail
+  class: MailerJob
+  #args: "subject", "content", "employer", "employee"
+  description: sends email

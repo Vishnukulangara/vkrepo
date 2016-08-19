@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160818071108) do
+ActiveRecord::Schema.define(version: 20160819090027) do
 
   create_table "asset_categories", force: :cascade do |t|
     t.string  "asset_type",        limit: 255
@@ -66,6 +66,24 @@ ActiveRecord::Schema.define(version: 20160818071108) do
     t.string "adhar_card_details",   limit: 255
     t.string "qualifications",       limit: 255
     t.string "employee_id",          limit: 255
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string   "message",      limit: 255
+    t.integer  "sender_id",    limit: 4
+    t.integer  "reciever_id",  limit: 4
+    t.integer  "archive",      limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "message_copy", limit: 255
+  end
+
+  create_table "newsletters", force: :cascade do |t|
+    t.string   "content",     limit: 255
+    t.datetime "schedule_at"
+    t.string   "sent_to",     limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "users", force: :cascade do |t|

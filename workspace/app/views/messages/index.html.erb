@@ -1,0 +1,192 @@
+<h3>Messages</h3>
+<% if current_employee %>
+	Recieved Messages:<br/>
+		
+		<% if Message.where(reciever_id: Employee.find_by_email(current_employee.email).id).first.nil? %>
+			<strong>No messages</strong>
+		<% else %>
+			<table>
+				<tr>
+					<th>Message</th>
+
+				</tr>
+				<% Message.where(reciever_id: Employee.find_by_email(current_employee.email).id).find_each do |m| %>
+					<% if m.message_copy != "deleted" %>
+						<tr>
+							<td>					
+								<%= m.message_copy%>
+								<%= link_to 'delete', message_path(m.id), method: 'delete' %>
+								
+							</td>
+						</tr>
+					<% end %>
+				<% end %>
+			</table>
+
+		<% end %>
+	<br/>
+
+	Sent Messages:<br/>
+		
+		<% if Message.where(sender_id: Employee.find_by_email(current_employee.email).id).first.nil? %>
+			<strong>No messages</strong>
+		<% else %>
+			<table>
+				<tr>
+					<th>Message</th>
+
+				</tr>
+				<% Message.where(sender_id: Employee.find_by_email(current_employee.email).id).find_each do |m| %>
+					<% if m.message_copy != "deleted" %>
+						<tr>
+							<td>
+							
+								<%= m.message_copy%>
+								<%= link_to 'delete', message_path(m.id), method: 'delete' %>
+							
+							</td>
+						</tr>
+					<% end %>
+				<% end %>
+			</table>
+
+		<% end %>
+	<br/>
+	<%= link_to 'New Message', new_message_path %>|
+	<%= link_to 'Back', employee_dashboard_index_path %>
+<% else %>
+	Recieved Messages:<br/>		
+		<% if Message.where(reciever_id: current_user.id).first.nil? %>
+			<strong>No messages</strong>
+		<% else %>
+			
+			<table>
+				<tr>
+					<th>Message</th>
+					<th>Sender</th>
+
+				</tr>
+				<% Message.where(reciever_id: current_user.id).find_each do |m| %>
+					<% if m.message != "deleted" %>
+						<tr>
+							<td>							
+								<%= link_to m.message, "/messages/archive/#{m.id}" %>
+											
+							</td>
+							<td>
+								<%= Employee.find(m.sender_id).name %>
+							</td>
+							<td><%= link_to 'reply', "/messages/to_employee/#{m.sender_id}" %>|</td>
+							<td><%= link_to 'delete', message_path(m.id), method: 'delete' %></td>
+						</tr>
+					<% end %>
+				<% end %>
+			</table>
+
+		<% end %>
+	<br/>
+	<br/>
+	<br/>
+	Sent Messages:<br/>
+		
+		<% if Message.where(sender_id: current_user.id).first.nil? %>
+			<strong>No messages</strong>
+		<% else %>
+			<table>
+				<tr>
+					<th>Message</th>
+					<th>Sent to:</th>
+
+				</tr>
+				<% Message.where(sender_id: current_user.id).find_each do |m| %>
+					<% if m.message != "deleted" %>
+						<tr>
+							<td>
+							
+								<%= link_to m.message, "/messages/archive/#{m.id}"%>
+								
+							
+							</td>
+							<td>
+								<%= Employee.find(m.reciever_id).name %>
+
+							</td>
+							<td><%= link_to 'delete', message_path(m.id), method: 'delete' %></td>
+						</tr>
+					<% end %>
+				<% end %>
+			</table>
+
+		<% end %>
+		<br/>
+		<br/>
+		<br/>
+	Recieved Messages Archived:<br/>		
+		<% if Message.where(reciever_id: current_user.id, archive: 1).first.nil? %>
+			<strong>No messages</strong>
+		<% else %>
+			
+			<table>
+				<tr>
+					<th>Message</th>
+					<th>Sender</th>
+
+				</tr>
+				<% Message.where(reciever_id: current_user.id, archive: 1).find_each do |m| %>
+					<% if m.message != "deleted" %>
+						<tr>
+							<td>							
+								<%=  m.message %>
+								<%= link_to 'delete', "/messages/unarchive/#{m.id}"%>			
+							</td>
+							<td>
+								<%= Employee.find(m.sender_id).name %>
+							</td>
+							<td><%= link_to 'reply', "/messages/to_employee/#{m.sender_id}" %></td>
+						</tr>
+					<% end %>
+				<% end %>
+			</table>
+
+		<% end %>
+	<br/>
+	<br/>
+	<br/>
+	Sent Messages Archived:<br/>
+		
+		<% if Message.where(sender_id: current_user.id, archive: 1).first.nil? %>
+			<strong>No messages</strong>
+		<% else %>
+			<table>
+				<tr>
+					<th>Message</th>
+					<th>Sent to:</th>
+
+				</tr>
+				<% Message.where(sender_id: current_user.id, archive: 1).find_each do |m| %>
+					<% if m.message != "deleted" %>
+						<tr>
+							<td>
+							
+								<%=  m.message %>
+								<%= link_to 'delete', "/messages/unarchive/#{m.id}"%>
+								
+							
+							</td>
+							<td>
+								<%= Employee.find(m.reciever_id).name %>
+
+							</td>
+						
+						</tr>
+					<% end %>
+				<% end %>
+			</table>
+
+		<% end %>
+
+	<br/>
+	<%= link_to 'New Message', new_message_path %>|
+	<%= link_to 'Back', admins_path %>
+
+<% end %>

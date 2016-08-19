@@ -1,0 +1,50 @@
+<h4>Newsletter</h4>
+<%= form_tag( "/newsletters" , method: 'post')  %>
+	<p>
+		Content:<br/>
+		<%= text_area  'content', nil %>
+	</p>
+	<p>
+		Schedule at:<br/>
+		<%= datetime_field_tag  'schedule_at', nil %>
+	</p>
+	<p>
+		Select all
+		<%= check_box 'sent_to', 'all' %><br/>OR
+	</p>
+	<div id="create">
+		<style type="text/css">
+			#create {display:none;}	</style>	
+		<% Employee.find_each do |e| %>
+			<input name="<%= e.id %>" type="checkbox">
+			<%= e.name %>
+			</input>
+			<br/>
+		<% end %>
+	</div>
+	<button onclick="myFunction()" type="button">Select recipients </button>
+		
+		<script>
+			function myFunction() {document.getElementById("create").style.display = "block";}
+		</script>
+		<br/>
+		<br/>
+		
+	
+		<div id="create">
+		<style type="text/css">
+			#create {display:none;}	</style>	
+		<% Employee.find_each do |e| %>
+			<input name="<%= e.id %>" type="checkbox">
+			<%= e.name %>
+			</input>
+			<br/>
+		<% end %>
+	</div>
+	<p>
+		<%= submit_tag 'Schedule' %>
+
+	</p>
+
+
+<%= link_to 'Back', newsletters_path %>

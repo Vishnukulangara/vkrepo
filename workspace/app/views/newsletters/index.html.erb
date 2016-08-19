@@ -1,0 +1,28 @@
+<h4>Newsletters</h4>
+<table>
+	<tr>
+		<th>
+			Content&emsp;
+		</th>
+	
+		<th>
+			scheduled at:&emsp;
+
+		</th>
+		
+	</tr>
+	<% Newsletter.find_each do |n|%>
+		  
+			<tr>
+				<td><%= n.content %></td>
+			
+			
+				<td><%= n.schedule_at%></td>
+				
+			</tr>
+		
+	<% end%>
+</table>
+
+<%= link_to 'Schedule Newsletter', new_newsletter_path %>|
+<%= link_to 'back', admins_path %>
